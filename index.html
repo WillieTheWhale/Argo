@@ -446,6 +446,245 @@
             cursor: crosshair;
             touch-action: none;
         }
+        
+        /* ============================================
+           PIXEL ICONS - REPLACEMENT FOR EMOJIS
+           Added: Phase 3 Enhancement
+           ============================================ */
+        .pixel-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            position: relative;
+        }
+        
+        .pixel-icon.large {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .pixel-icon.small {
+            width: 12px;
+            height: 12px;
+        }
+        
+        /* Animated pixel icons */
+        @keyframes pixel-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        @keyframes pixel-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .pixel-icon.heart:hover {
+            animation: pixel-pulse 0.6s ease infinite;
+        }
+        
+        .pixel-icon.fire {
+            animation: pixel-bounce 1s ease infinite;
+        }
+        
+        /* Save/Share Modal Styles */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .share-modal.show {
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background: var(--argo-white);
+            border: 4px solid var(--argo-blue);
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 400px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 8px 0 var(--argo-dark-blue);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--argo-dark-blue);
+            font-family: 'Press Start 2P', monospace;
+        }
+        
+        .modal-content h3 {
+            font-size: 14px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .modal-subtitle {
+            font-size: 10px;
+            color: var(--argo-blue);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .share-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .share-btn {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 4px;
+            padding: 10px;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .share-btn:hover {
+            background: var(--argo-blue);
+            color: var(--argo-white);
+            transform: translateY(-2px);
+        }
+        
+        .modal-note {
+            font-size: 8px;
+            color: var(--argo-dark-blue);
+            text-align: center;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        
+        /* Save Notification */
+        .save-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--argo-blue);
+            color: var(--argo-white);
+            padding: 12px 20px;
+            border: 3px solid var(--argo-white);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 10002;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .save-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* My Doodles Section */
+        .my-doodles-section {
+            background: var(--argo-gray);
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 4px solid var(--argo-blue);
+        }
+        
+        .my-doodles-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .my-doodles-title {
+            font-size: 18px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 10px;
+        }
+        
+        #myDoodlesContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .my-doodle-item {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 6px;
+            padding: 8px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        
+        .my-doodle-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 0 var(--argo-dark-blue);
+        }
+        
+        .my-doodle-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            image-rendering: pixelated;
+        }
+        
+        .doodle-actions {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 2px solid var(--argo-light-blue);
+        }
+        
+        .doodle-actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            transition: transform 0.2s ease;
+        }
+        
+        .doodle-actions button:hover {
+            transform: scale(1.2);
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: var(--argo-blue);
+            font-size: 10px;
+            padding: 40px;
+            grid-column: 1 / -1;
+        }
 
         /* Enhanced Color Palette */
         .color-palette {
@@ -475,7 +714,7 @@
         }
 
         .color-swatch.active::after {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -745,6 +984,152 @@
                 display: none;
             }
         }
+        
+        /* ============================================
+           PIXEL ICONS - Replace emojis with pixel art
+           Added: Phase 3 Enhancement
+           ============================================ */
+        .pixel-icon {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+            vertical-align: middle;
+            position: relative;
+        }
+        
+        .pixel-icon.large {
+            width: 24px;
+            height: 24px;
+        }
+        
+        .pixel-icon.small {
+            width: 12px;
+            height: 12px;
+        }
+        
+        /* Heart icon */
+        .pixel-icon.heart::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="3" y="4" width="2" height="2" fill="%23FF0000"/><rect x="5" y="3" width="2" height="2" fill="%23FF0000"/><rect x="7" y="3" width="2" height="2" fill="%23FF0000"/><rect x="9" y="4" width="2" height="2" fill="%23FF0000"/><rect x="11" y="4" width="2" height="2" fill="%23FF0000"/><rect x="2" y="6" width="2" height="2" fill="%23FF0000"/><rect x="4" y="6" width="2" height="2" fill="%23FF0000"/><rect x="6" y="6" width="2" height="2" fill="%23FF0000"/><rect x="8" y="6" width="2" height="2" fill="%23FF0000"/><rect x="10" y="6" width="2" height="2" fill="%23FF0000"/><rect x="12" y="6" width="2" height="2" fill="%23FF0000"/><rect x="3" y="8" width="2" height="2" fill="%23FF0000"/><rect x="5" y="8" width="2" height="2" fill="%23FF0000"/><rect x="7" y="8" width="2" height="2" fill="%23FF0000"/><rect x="9" y="8" width="2" height="2" fill="%23FF0000"/><rect x="11" y="8" width="2" height="2" fill="%23FF0000"/><rect x="5" y="10" width="2" height="2" fill="%23FF0000"/><rect x="7" y="10" width="2" height="2" fill="%23FF0000"/><rect x="9" y="10" width="2" height="2" fill="%23FF0000"/><rect x="7" y="12" width="2" height="2" fill="%23FF0000"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Love icon */
+        .pixel-icon.love::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="3" y="3" width="2" height="2" fill="%23FF66CC"/><rect x="11" y="3" width="2" height="2" fill="%23FF66CC"/><rect x="2" y="5" width="2" height="2" fill="%23FF66CC"/><rect x="4" y="5" width="2" height="2" fill="%23FF66CC"/><rect x="10" y="5" width="2" height="2" fill="%23FF66CC"/><rect x="12" y="5" width="2" height="2" fill="%23FF66CC"/><rect x="3" y="7" width="10" height="2" fill="%23FF66CC"/><rect x="4" y="9" width="8" height="2" fill="%23FF66CC"/><rect x="5" y="11" width="6" height="2" fill="%23FF66CC"/><rect x="7" y="13" width="2" height="2" fill="%23FF66CC"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Fire icon */
+        .pixel-icon.fire::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="7" y="2" width="2" height="2" fill="%23FF6600"/><rect x="6" y="4" width="2" height="2" fill="%23FF6600"/><rect x="8" y="4" width="2" height="2" fill="%23FF6600"/><rect x="5" y="6" width="2" height="2" fill="%23FFCC00"/><rect x="7" y="6" width="2" height="2" fill="%23FF6600"/><rect x="9" y="6" width="2" height="2" fill="%23FFCC00"/><rect x="4" y="8" width="2" height="2" fill="%23FFCC00"/><rect x="6" y="8" width="2" height="2" fill="%23FF0000"/><rect x="8" y="8" width="2" height="2" fill="%23FF0000"/><rect x="10" y="8" width="2" height="2" fill="%23FFCC00"/><rect x="4" y="10" width="2" height="2" fill="%23FF0000"/><rect x="6" y="10" width="2" height="2" fill="%23FF0000"/><rect x="8" y="10" width="2" height="2" fill="%23FF0000"/><rect x="10" y="10" width="2" height="2" fill="%23FF0000"/><rect x="5" y="12" width="2" height="2" fill="%23FF0000"/><rect x="7" y="12" width="2" height="2" fill="%23FF0000"/><rect x="9" y="12" width="2" height="2" fill="%23FF0000"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Laugh icon */
+        .pixel-icon.laugh::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="4" y="3" width="8" height="2" fill="%23FFCC00"/><rect x="2" y="5" width="2" height="2" fill="%23FFCC00"/><rect x="12" y="5" width="2" height="2" fill="%23FFCC00"/><rect x="2" y="7" width="2" height="2" fill="%23FFCC00"/><rect x="5" y="7" width="2" height="2" fill="%23000000"/><rect x="9" y="7" width="2" height="2" fill="%23000000"/><rect x="12" y="7" width="2" height="2" fill="%23FFCC00"/><rect x="2" y="9" width="2" height="2" fill="%23FFCC00"/><rect x="4" y="10" width="8" height="2" fill="%23000000"/><rect x="12" y="9" width="2" height="2" fill="%23FFCC00"/><rect x="4" y="11" width="8" height="2" fill="%23FFCC00"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Animated effects for pixel icons */
+        @keyframes pixel-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        @keyframes pixel-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .pixel-icon.heart:hover {
+            animation: pixel-pulse 0.6s ease infinite;
+        }
+        
+        .pixel-icon.fire {
+            animation: pixel-bounce 1s ease infinite;
+        }
+        
+        .reaction-btn .pixel-icon {
+            margin-right: 3px;
+        }
+        
+        /* Shake animation for already-reacted buttons */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px); }
+            75% { transform: translateX(3px); }
+        }
+        
+        /* My Doodles section styling */
+        .my-doodles-section {
+            background: var(--argo-gray);
+            padding: 40px 20px;
+            min-height: 200px;
+        }
+        
+        .my-doodles-title {
+            font-size: 20px;
+            color: var(--argo-dark-blue);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        /* Additional pixel icons for UI elements */
+        .pixel-icon.checkmark::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="2" y="8" width="2" height="2" fill="%23FFFFFF"/><rect x="4" y="10" width="2" height="2" fill="%23FFFFFF"/><rect x="6" y="12" width="2" height="2" fill="%23FFFFFF"/><rect x="8" y="10" width="2" height="2" fill="%23FFFFFF"/><rect x="10" y="8" width="2" height="2" fill="%23FFFFFF"/><rect x="12" y="6" width="2" height="2" fill="%23FFFFFF"/><rect x="14" y="4" width="2" height="2" fill="%23FFFFFF"/></svg>');
+            background-size: contain;
+        }
+        
+        .pixel-icon.share::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="10" y="2" width="4" height="4" fill="%230066CC"/><rect x="8" y="4" width="2" height="2" fill="%230066CC"/><rect x="6" y="6" width="2" height="2" fill="%230066CC"/><rect x="2" y="6" width="4" height="4" fill="%230066CC"/><rect x="6" y="8" width="2" height="2" fill="%230066CC"/><rect x="8" y="10" width="2" height="2" fill="%230066CC"/><rect x="10" y="10" width="4" height="4" fill="%230066CC"/></svg>');
+            background-size: contain;
+        }
+        
+        .pixel-icon.link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect x="6" y="4" width="2" height="2" fill="%23000000"/><rect x="4" y="6" width="2" height="2" fill="%23000000"/><rect x="6" y="8" width="2" height="2" fill="%23000000"/><rect x="8" y="6" width="2" height="2" fill="%23000000"/><rect x="10" y="8" width="2" height="2" fill="%23000000"/><rect x="8" y="10" width="2" height="2" fill="%23000000"/><rect x="10" y="12" width="2" height="2" fill="%23000000"/><rect x="12" y="10" width="2" height="2" fill="%23000000"/></svg>');
+            background-size: contain;
+        }
+        
+        /* Doodle info styling */
+        .doodle-info {
+            padding: 8px;
+            font-size: 8px;
+            color: var(--argo-blue);
+            text-align: center;
+            border-top: 1px solid var(--argo-light-blue);
+        }
     </style>
 </head>
 <body>
@@ -910,9 +1295,24 @@
                 <div class="drawing-tools">
                     <button class="tool-btn" id="clearBtn">CLEAR</button>
                     <button class="tool-btn" id="eraserBtn">ERASER</button>
-                    <button class="tool-btn" id="saveBtn">SAVE</button>
-                    <button class="tool-btn" id="shareBtn">SHARE</button>
+                    <button class="tool-btn" id="saveBtn" onclick="saveDoodleAsImage()">SAVE</button>
+                    <button class="tool-btn" id="shareBtn" onclick="shareDoodle()">SHARE</button>
                 </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- My Doodles Section -->
+    <section class="my-doodles-section">
+        <div class="section-content">
+            <div class="my-doodles-header">
+                <h2 class="my-doodles-title">My Doodles</h2>
+                <p style="font-size: 10px; color: var(--argo-blue); margin-bottom: 20px;">
+                    Your saved creations appear here!
+                </p>
+            </div>
+            <div id="myDoodlesContainer">
+                <!-- User's saved doodles will appear here -->
             </div>
         </div>
     </section>
@@ -928,7 +1328,7 @@
                     GET EARLY ACCESS
                 </a>
                 <p style="margin-top: 20px; font-size: 10px; color: var(--argo-blue);">
-                    🔥 Limited spots • Launching Q2 2025
+                    ðŸ”¥ Limited spots â€¢ Launching Q2 2025
                 </p>
             </div>
         </div>
@@ -936,7 +1336,7 @@
 
     <!-- Achievement Badge (Hidden by default) -->
     <div class="achievement-badge" id="achievementBadge" style="display: none;">
-        <div class="achievement-icon">🏆</div>
+        <div class="achievement-icon">ðŸ†</div>
         <div class="achievement-title">Achievement Unlocked!</div>
         <div class="achievement-desc" id="achievementDesc">Master Artist</div>
     </div>
@@ -971,6 +1371,846 @@
                 return this.cores < 2 || this.memory < 2;
             }
         };
+        
+        // ============================================
+        // PIXEL ICON GENERATOR - Creates pixel icons programmatically
+        // Added: Phase 3 Enhancement
+        // ============================================
+        class PixelIconGenerator {
+            static createIcon(type, size = 16, color = '#0066CC') {
+                const canvas = document.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext('2d');
+                ctx.imageSmoothingEnabled = false;
+                
+                const scale = size / 16;
+                ctx.scale(scale, scale);
+                ctx.fillStyle = color;
+                
+                switch(type) {
+                    case 'heart':
+                        this.drawHeart(ctx);
+                        break;
+                    case 'fire':
+                        this.drawFire(ctx);
+                        break;
+                    case 'thumbsUp':
+                        this.drawThumbsUp(ctx);
+                        break;
+                    case 'laugh':
+                        this.drawLaugh(ctx);
+                        break;
+                    case 'robot':
+                        this.drawRobot(ctx);
+                        break;
+                    case 'phone':
+                        this.drawPhone(ctx);
+                        break;
+                    case 'check':
+                        this.drawCheck(ctx);
+                        break;
+                    case 'download':
+                        this.drawDownload(ctx);
+                        break;
+                    case 'trash':
+                        this.drawTrash(ctx);
+                        break;
+                    case 'link':
+                        this.drawLink(ctx);
+                        break;
+                    case 'sparkle':
+                        this.drawSparkle(ctx);
+                        break;
+                    case 'twitter':
+                        this.drawTwitter(ctx);
+                        break;
+                    case 'facebook':
+                        this.drawFacebook(ctx);
+                        break;
+                    default:
+                        this.drawDefault(ctx);
+                }
+                
+                return canvas.toDataURL();
+            }
+            
+            static drawHeart(ctx) {
+                const pixels = [
+                    [0,0,1,1,0,0,0,1,1,0,0,0],
+                    [0,1,1,1,1,0,1,1,1,1,0,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1,1,1,0],
+                    [0,1,1,1,1,1,1,1,1,1,0,0],
+                    [0,0,1,1,1,1,1,1,1,0,0,0],
+                    [0,0,0,1,1,1,1,1,0,0,0,0],
+                    [0,0,0,0,1,1,1,0,0,0,0,0],
+                    [0,0,0,0,0,1,0,0,0,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawFire(ctx) {
+                const pixels = [
+                    [0,0,0,0,1,0,0,0,0,0],
+                    [0,0,0,1,1,0,0,0,0,0],
+                    [0,0,0,1,1,1,0,0,0,0],
+                    [0,0,1,1,1,1,0,0,0,0],
+                    [0,0,1,1,1,1,1,0,0,0],
+                    [0,1,1,1,1,1,1,0,0,0],
+                    [0,1,1,1,1,1,1,1,0,0],
+                    [1,1,1,1,1,1,1,1,0,0],
+                    [1,1,1,1,1,1,1,1,1,0],
+                    [0,1,1,1,1,1,1,1,0,0],
+                    [0,0,1,1,1,1,1,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawThumbsUp(ctx) {
+                const pixels = [
+                    [0,0,0,1,1,0,0,0,0],
+                    [0,0,0,1,1,0,0,0,0],
+                    [0,0,0,1,1,0,0,0,0],
+                    [0,0,0,1,1,0,0,0,0],
+                    [1,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1,1],
+                    [0,1,1,1,1,1,1,1,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawLaugh(ctx) {
+                // Simple smiley face
+                const pixels = [
+                    [0,0,1,1,1,1,1,0,0],
+                    [0,1,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1,1],
+                    [1,1,0,1,1,1,0,1,1],
+                    [1,1,1,1,1,1,1,1,1],
+                    [1,1,0,1,1,1,0,1,1],
+                    [1,1,1,0,0,0,1,1,1],
+                    [0,1,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,1,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawRobot(ctx) {
+                const pixels = [
+                    [0,0,0,1,0,0,0],
+                    [0,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1],
+                    [1,0,1,1,1,0,1],
+                    [1,1,1,1,1,1,1],
+                    [1,1,0,0,0,1,1],
+                    [0,1,1,1,1,1,0],
+                    [0,0,1,1,1,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawPhone(ctx) {
+                const pixels = [
+                    [0,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,1,1,1,1,1],
+                    [1,1,1,0,0,1,1,1],
+                    [0,1,1,1,1,1,1,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawCheck(ctx) {
+                const pixels = [
+                    [0,0,0,0,0,0,1,0],
+                    [0,0,0,0,0,1,1,0],
+                    [0,0,0,0,1,1,0,0],
+                    [1,0,0,1,1,0,0,0],
+                    [1,1,1,1,0,0,0,0],
+                    [0,1,1,0,0,0,0,0],
+                    [0,0,0,0,0,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawDownload(ctx) {
+                const pixels = [
+                    [0,0,1,1,1,1,0,0],
+                    [0,0,1,1,1,1,0,0],
+                    [0,0,1,1,1,1,0,0],
+                    [1,1,1,1,1,1,1,1],
+                    [0,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,0,0],
+                    [0,0,0,1,1,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawTrash(ctx) {
+                const pixels = [
+                    [0,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,1,1],
+                    [0,1,0,1,0,1,0,0],
+                    [0,1,0,1,0,1,0,0],
+                    [0,1,0,1,0,1,0,0],
+                    [0,1,0,1,0,1,0,0],
+                    [0,1,1,1,1,1,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawLink(ctx) {
+                const pixels = [
+                    [0,1,1,0,0,1,1,0],
+                    [1,0,0,1,1,0,0,1],
+                    [1,0,0,1,1,0,0,1],
+                    [0,1,1,1,1,1,1,0],
+                    [0,0,1,1,1,1,0,0],
+                    [0,1,1,1,1,1,1,0],
+                    [1,0,0,1,1,0,0,1],
+                    [1,0,0,1,1,0,0,1],
+                    [0,1,1,0,0,1,1,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawSparkle(ctx) {
+                const pixels = [
+                    [0,0,0,1,0,0,0],
+                    [0,0,1,1,1,0,0],
+                    [0,1,0,1,0,1,0],
+                    [1,1,1,1,1,1,1],
+                    [0,1,0,1,0,1,0],
+                    [0,0,1,1,1,0,0],
+                    [0,0,0,1,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawTwitter(ctx) {
+                // Simple bird shape for Twitter
+                const pixels = [
+                    [0,0,0,1,1,1,0,0],
+                    [0,0,1,1,1,1,1,0],
+                    [0,1,1,1,1,1,1,0],
+                    [1,1,1,1,1,1,0,0],
+                    [1,1,1,1,1,0,0,0],
+                    [0,1,1,1,0,0,0,0],
+                    [0,0,1,0,0,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawFacebook(ctx) {
+                // Simple F shape for Facebook
+                const pixels = [
+                    [1,1,1,1,1,1,1],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,1,1,1,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,0,0,0,0],
+                    [1,1,0,0,0,0,0]
+                ];
+                this.drawPixels(ctx, pixels);
+            }
+            
+            static drawDefault(ctx) {
+                // Simple square for unknown icons
+                ctx.fillRect(2, 2, 12, 12);
+            }
+            
+            static drawPixels(ctx, pixels) {
+                pixels.forEach((row, y) => {
+                    row.forEach((pixel, x) => {
+                        if (pixel === 1) {
+                            ctx.fillRect(x * 2, y * 1.5, 2, 1.5);
+                        }
+                    });
+                });
+            }
+        }
+        
+        // ============================================
+        // DOODLE GENERATOR - Creates programmatic Pictochat-style doodles
+        // Added: Phase 3 Enhancement - NO BACKEND VERSION
+        // Enhanced with realistic hand-drawn effects
+        // ============================================
+        class DoodleGenerator {
+            constructor(width = 200, height = 150) {
+                this.width = width;
+                this.height = height;
+                this.colors = ['#000000', '#FF0000', '#0066CC', '#00CC00', 
+                              '#FFCC00', '#FF6600', '#FF66CC', '#6600CC'];
+                this.penSizes = [2, 5, 8];
+                // Signatures for random doodles
+                this.signatures = ['~A', 'JK', 'XD', ':)', 'M', 'S.T.', '!!!', '<3', 'TY', 'hi!'];
+            }
+            
+            generate(type) {
+                const canvas = document.createElement('canvas');
+                canvas.width = this.width;
+                canvas.height = this.height;
+                const ctx = canvas.getContext('2d');
+                
+                // White background
+                ctx.fillStyle = '#FFFFFF';
+                ctx.fillRect(0, 0, this.width, this.height);
+                
+                // Disable smoothing for pixel-perfect look
+                ctx.imageSmoothingEnabled = false;
+                
+                // Generate based on type
+                switch(type) {
+                    case 'robot':
+                        this.drawRobot(ctx);
+                        break;
+                    case 'phone':
+                        this.drawPhone(ctx);
+                        break;
+                    case 'ai':
+                        this.drawAI(ctx);
+                        break;
+                    case 'text':
+                        this.drawText(ctx);
+                        break;
+                    case 'abstract':
+                        this.drawAbstract(ctx);
+                        break;
+                }
+                
+                // Optionally add eraser marks (20% chance)
+                if (Math.random() < 0.2) {
+                    this.addEraserMarks(ctx);
+                }
+                
+                return canvas.toDataURL();
+            }
+            
+            // Helper method: Draw organic line with hand-drawn wobble
+            drawOrganicLine(ctx, x1, y1, x2, y2, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness + (Math.random() - 0.5) * 1.5; // Vary thickness
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                ctx.beginPath();
+                ctx.moveTo(x1 + (Math.random() - 0.5) * 2, y1 + (Math.random() - 0.5) * 2);
+                
+                // Add control points with jitter for natural curve
+                const segments = Math.max(3, Math.floor(Math.hypot(x2 - x1, y2 - y1) / 20));
+                for (let i = 1; i <= segments; i++) {
+                    const t = i / segments;
+                    const x = x1 + (x2 - x1) * t + (Math.random() - 0.5) * 3;
+                    const y = y1 + (y2 - y1) * t + (Math.random() - 0.5) * 3;
+                    ctx.lineTo(x, y);
+                }
+                
+                ctx.stroke();
+                
+                // Sometimes add a second stroke for "correction" effect
+                if (Math.random() < 0.1) {
+                    ctx.globalAlpha = 0.3;
+                    ctx.beginPath();
+                    ctx.moveTo(x1 + 1, y1 + 1);
+                    ctx.lineTo(x2 + 1, y2 + 1);
+                    ctx.stroke();
+                    ctx.globalAlpha = 1;
+                }
+            }
+            
+            // Helper method: Draw wobbly circle (imperfect)
+            drawWobblyCircle(ctx, cx, cy, radius, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness + (Math.random() - 0.5);
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                
+                const points = 16 + Math.floor(Math.random() * 8);
+                for (let i = 0; i <= points; i++) {
+                    const angle = (i / points) * Math.PI * 2;
+                    const jitter = (Math.random() - 0.5) * (radius * 0.15);
+                    const r = radius + jitter;
+                    const x = cx + Math.cos(angle) * r + (Math.random() - 0.5) * 2;
+                    const y = cy + Math.sin(angle) * r + (Math.random() - 0.5) * 2;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                
+                // Don't always close perfectly
+                if (Math.random() > 0.2) {
+                    ctx.closePath();
+                }
+                ctx.stroke();
+            }
+            
+            // Helper method: Draw wobbly rectangle
+            drawWobblyRect(ctx, x, y, width, height, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness + (Math.random() - 0.5);
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
+                ctx.beginPath();
+                
+                // Start point with slight offset
+                const startX = x + (Math.random() - 0.5) * 3;
+                const startY = y + (Math.random() - 0.5) * 3;
+                ctx.moveTo(startX, startY);
+                
+                // Top edge
+                this.drawWobblyEdge(ctx, startX, startY, x + width, y);
+                
+                // Right edge
+                this.drawWobblyEdge(ctx, x + width, y, x + width, y + height);
+                
+                // Bottom edge
+                this.drawWobblyEdge(ctx, x + width, y + height, x, y + height);
+                
+                // Left edge (might not connect perfectly)
+                if (Math.random() > 0.1) {
+                    this.drawWobblyEdge(ctx, x, y + height, startX, startY);
+                }
+                
+                ctx.stroke();
+            }
+            
+            // Helper for drawing wobbly edge
+            drawWobblyEdge(ctx, x1, y1, x2, y2) {
+                const segments = 3 + Math.floor(Math.random() * 2);
+                for (let i = 1; i <= segments; i++) {
+                    const t = i / segments;
+                    const x = x1 + (x2 - x1) * t + (Math.random() - 0.5) * 4;
+                    const y = y1 + (y2 - y1) * t + (Math.random() - 0.5) * 4;
+                    ctx.lineTo(x, y);
+                }
+            }
+            
+            // Draw handwritten-style text
+            drawHandwrittenText(ctx, text, x, y, color) {
+                ctx.fillStyle = color;
+                ctx.font = 'bold 14px "Press Start 2P", monospace';
+                
+                // Add slight rotation for natural look
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate((Math.random() - 0.5) * 0.05);
+                
+                for (let i = 0; i < text.length; i++) {
+                    const jitterX = (Math.random() - 0.5) * 2;
+                    const jitterY = (Math.random() - 0.5) * 2;
+                    ctx.fillText(text[i], i * 14 + jitterX, jitterY);
+                }
+                
+                ctx.restore();
+            }
+            
+            // Draw a star shape
+            drawStar(ctx, cx, cy, size, color) {
+                ctx.fillStyle = color;
+                const points = 5;
+                const outer = size;
+                const inner = size * 0.4;
+                
+                ctx.beginPath();
+                for (let i = 0; i < points * 2; i++) {
+                    const angle = (i * Math.PI) / points - Math.PI / 2;
+                    const r = i % 2 === 0 ? outer : inner;
+                    const x = cx + Math.cos(angle) * r + (Math.random() - 0.5) * 1;
+                    const y = cy + Math.sin(angle) * r + (Math.random() - 0.5) * 1;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            // Add eraser marks effect
+            addEraserMarks(ctx) {
+                const numMarks = 1 + Math.floor(Math.random() * 3);
+                
+                for (let i = 0; i < numMarks; i++) {
+                    const x = Math.random() * this.width;
+                    const y = Math.random() * this.height;
+                    const size = 10 + Math.random() * 20;
+                    
+                    ctx.save();
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.globalAlpha = 0.3 + Math.random() * 0.4;
+                    
+                    // Create eraser stroke
+                    ctx.beginPath();
+                    for (let j = 0; j < 5; j++) {
+                        const offsetX = x + (Math.random() - 0.5) * size;
+                        const offsetY = y + (Math.random() - 0.5) * size;
+                        if (j === 0) ctx.moveTo(offsetX, offsetY);
+                        else ctx.lineTo(offsetX, offsetY);
+                    }
+                    ctx.lineWidth = 8 + Math.random() * 8;
+                    ctx.stroke();
+                    
+                    ctx.restore();
+                }
+            }
+            
+            // Add signature to corner
+            addSignature(ctx) {
+                const signature = this.signatures[Math.floor(Math.random() * this.signatures.length)];
+                ctx.fillStyle = this.randomColor();
+                ctx.font = '8px monospace';
+                ctx.globalAlpha = 0.7;
+                ctx.fillText(signature, this.width - 30, this.height - 10);
+                ctx.globalAlpha = 1;
+            }
+            
+            drawRobot(ctx) {
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                const color = this.randomColor();
+                const size = this.randomPenSize();
+                
+                // Head (wobbly square)
+                this.drawWobblyRect(ctx, centerX - 25, centerY - 30, 50, 45, color, size);
+                
+                // Eyes
+                this.drawWobblyCircle(ctx, centerX - 12, centerY - 15, 5, color, size);
+                this.drawWobblyCircle(ctx, centerX + 12, centerY - 15, 5, color, size);
+                
+                // Antenna
+                this.drawOrganicLine(ctx, centerX, centerY - 30, centerX, centerY - 45, color, size);
+                this.drawWobblyCircle(ctx, centerX, centerY - 45, 4, color, size);
+                
+                // Mouth (simple line)
+                this.drawOrganicLine(ctx, centerX - 8, centerY, centerX + 8, centerY, color, size);
+                
+                // Body (sometimes)
+                if (Math.random() > 0.3) {
+                    this.drawWobblyRect(ctx, centerX - 20, centerY + 15, 40, 35, color, size);
+                    // Arms
+                    this.drawOrganicLine(ctx, centerX - 20, centerY + 25, centerX - 35, centerY + 30, color, size);
+                    this.drawOrganicLine(ctx, centerX + 20, centerY + 25, centerX + 35, centerY + 30, color, size);
+                }
+                
+                // Add signature sometimes
+                if (Math.random() < 0.15) {
+                    this.addSignature(ctx);
+                }
+            }
+            
+            drawPhone(ctx) {
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                const color = this.randomColor();
+                const size = this.randomPenSize();
+                
+                // Phone body
+                this.drawWobblyRect(ctx, centerX - 20, centerY - 35, 40, 70, color, size);
+                
+                // Screen
+                this.drawWobblyRect(ctx, centerX - 15, centerY - 25, 30, 40, color, size - 1);
+                
+                // Button
+                this.drawWobblyCircle(ctx, centerX, centerY + 25, 4, color, size);
+                
+                // Signal waves
+                if (Math.random() > 0.5) {
+                    this.drawOrganicLine(ctx, centerX + 25, centerY - 20, centerX + 35, centerY - 25, color, size - 1);
+                    this.drawOrganicLine(ctx, centerX + 25, centerY - 10, centerX + 35, centerY - 15, color, size - 1);
+                    this.drawOrganicLine(ctx, centerX + 25, centerY, centerX + 35, centerY - 5, color, size - 1);
+                }
+            }
+            
+            drawAI(ctx) {
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                const color = this.randomColor();
+                const size = this.randomPenSize();
+                
+                // Circuit board pattern
+                const gridSize = 15;
+                for (let i = 0; i < 4; i++) {
+                    const x = centerX - 30 + i * 20 + (Math.random() - 0.5) * 5;
+                    const y = centerY - 20 + (Math.random() - 0.5) * 10;
+                    
+                    // Draw circuit nodes
+                    this.drawWobblyCircle(ctx, x, y, 3, color, size);
+                    
+                    // Connect with lines
+                    if (i < 3) {
+                        this.drawOrganicLine(ctx, x + 3, y, x + 17, y, color, size - 1);
+                    }
+                }
+                
+                // Central chip
+                this.drawWobblyRect(ctx, centerX - 15, centerY - 10, 30, 20, color, size);
+                
+                // Add "AI" text
+                ctx.fillStyle = color;
+                ctx.font = 'bold 12px monospace';
+                ctx.fillText('AI', centerX - 7, centerY + 3);
+                
+                // Additional circuit lines
+                for (let i = 0; i < 3; i++) {
+                    const startX = centerX - 15;
+                    const startY = centerY - 10 + i * 10;
+                    this.drawOrganicLine(ctx, startX - 20, startY, startX, startY, color, size - 1);
+                    this.drawOrganicLine(ctx, centerX + 15, startY, centerX + 35, startY, color, size - 1);
+                }
+            }
+            
+            drawText(ctx) {
+                const phrases = ['ARGO', 'AI', 'HELLO', 'CALL ME', 'HI!', 'HELP', 'YES!', 'WOW', 'COOL'];
+                const text = phrases[Math.floor(Math.random() * phrases.length)];
+                const color = this.randomColor();
+                
+                // Position text with some randomness
+                const x = 20 + Math.random() * 20;
+                const y = this.height / 2 + (Math.random() - 0.5) * 30;
+                
+                this.drawHandwrittenText(ctx, text, x, y, color);
+                
+                // Add decorations sometimes
+                if (Math.random() > 0.5) {
+                    // Underline
+                    this.drawOrganicLine(ctx, x, y + 5, x + text.length * 12, y + 5, color, 2);
+                }
+                
+                if (Math.random() > 0.7) {
+                    // Add stars around text
+                    this.drawStar(ctx, x - 15, y - 10, 3, color);
+                    this.drawStar(ctx, x + text.length * 12 + 10, y - 10, 3, color);
+                }
+            }
+            
+            drawAbstract(ctx) {
+                const color = this.randomColor();
+                const size = this.randomPenSize();
+                const centerX = this.width / 2;
+                const centerY = this.height / 2;
+                
+                const abstracts = ['star', 'heart', 'arrows', 'spiral', 'zigzag'];
+                const type = abstracts[Math.floor(Math.random() * abstracts.length)];
+                
+                switch(type) {
+                    case 'star':
+                        this.drawStar(ctx, centerX, centerY, 20, color);
+                        break;
+                    case 'heart':
+                        this.drawHeart(ctx, centerX, centerY, color, size);
+                        break;
+                    case 'arrows':
+                        this.drawArrow(ctx, centerX - 30, centerY, centerX + 30, centerY, color, size);
+                        break;
+                    case 'spiral':
+                        this.drawSpiral(ctx, centerX, centerY, color, size);
+                        break;
+                    case 'zigzag':
+                        this.drawZigzag(ctx, centerX - 40, centerY, centerX + 40, centerY, color, size);
+                        break;
+                }
+                
+                // Add random decorations
+                for (let i = 0; i < 3; i++) {
+                    if (Math.random() > 0.6) {
+                        const x = Math.random() * this.width;
+                        const y = Math.random() * this.height;
+                        this.drawStar(ctx, x, y, 2, color);
+                    }
+                }
+            }
+            
+            // Helper drawing functions with hand-drawn imperfections
+            drawOrganicLine(ctx, x1, y1, x2, y2, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness + (Math.random() * 2 - 1); // Vary thickness
+                ctx.lineCap = 'round';
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                
+                // Add wobble via control points
+                const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * 5;
+                const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * 5;
+                
+                ctx.quadraticCurveTo(midX, midY, x2, y2);
+                ctx.stroke();
+            }
+            
+            drawWobblyCircle(ctx, cx, cy, radius, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                
+                const points = 16;
+                for (let i = 0; i <= points; i++) {
+                    const angle = (i / points) * Math.PI * 2;
+                    const jitter = (Math.random() - 0.5) * 3;
+                    const r = radius + jitter;
+                    const x = cx + Math.cos(angle) * r;
+                    const y = cy + Math.sin(angle) * r;
+                    
+                    if (i === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.closePath();
+                ctx.stroke();
+            }
+            
+            drawWobblyRect(ctx, x, y, w, h, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                
+                // Top line with wobble
+                this.drawOrganicLine(ctx, x, y, x + w, y, color, thickness);
+                // Right line
+                this.drawOrganicLine(ctx, x + w, y, x + w, y + h, color, thickness);
+                // Bottom line
+                this.drawOrganicLine(ctx, x + w, y + h, x, y + h, color, thickness);
+                // Left line
+                this.drawOrganicLine(ctx, x, y + h, x, y, color, thickness);
+            }
+            
+            drawHandwrittenText(ctx, text, x, y, color) {
+                ctx.font = 'bold 14px "Press Start 2P", monospace';
+                ctx.fillStyle = color;
+                
+                // Add character-by-character with slight position variation
+                for (let i = 0; i < text.length; i++) {
+                    const jitterX = (Math.random() - 0.5) * 1;
+                    const jitterY = (Math.random() - 0.5) * 1;
+                    ctx.fillText(text[i], x + i * 12 + jitterX, y + jitterY);
+                }
+            }
+            
+            drawStar(ctx, x, y, size, color) {
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 144 - 90) * Math.PI / 180;
+                    const innerAngle = ((i * 144 + 36) - 90) * Math.PI / 180;
+                    
+                    const outerX = x + Math.cos(angle) * size;
+                    const outerY = y + Math.sin(angle) * size;
+                    const innerX = x + Math.cos(innerAngle) * size * 0.5;
+                    const innerY = y + Math.sin(innerAngle) * size * 0.5;
+                    
+                    if (i === 0) ctx.moveTo(outerX, outerY);
+                    else ctx.lineTo(outerX, outerY);
+                    ctx.lineTo(innerX, innerY);
+                }
+                ctx.closePath();
+                ctx.fill();
+            }
+            
+            drawHeart(ctx, x, y, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                ctx.moveTo(x, y + 5);
+                ctx.bezierCurveTo(x - 10, y - 5, x - 20, y + 5, x - 20, y + 10);
+                ctx.bezierCurveTo(x - 20, y + 15, x - 10, y + 25, x, y + 30);
+                ctx.bezierCurveTo(x + 10, y + 25, x + 20, y + 15, x + 20, y + 10);
+                ctx.bezierCurveTo(x + 20, y + 5, x + 10, y - 5, x, y + 5);
+                ctx.stroke();
+            }
+            
+            drawArrow(ctx, x1, y1, x2, y2, color, thickness) {
+                // Arrow line
+                this.drawOrganicLine(ctx, x1, y1, x2, y2, color, thickness);
+                
+                // Arrowhead
+                const angle = Math.atan2(y2 - y1, x2 - x1);
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - 10 * Math.cos(angle - Math.PI/6), y2 - 10 * Math.sin(angle - Math.PI/6));
+                ctx.moveTo(x2, y2);
+                ctx.lineTo(x2 - 10 * Math.cos(angle + Math.PI/6), y2 - 10 * Math.sin(angle + Math.PI/6));
+                ctx.stroke();
+            }
+            
+            drawSpiral(ctx, x, y, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                
+                for (let i = 0; i < 50; i++) {
+                    const angle = 0.3 * i;
+                    const radius = 2 * i;
+                    const px = x + radius * Math.cos(angle);
+                    const py = y + radius * Math.sin(angle);
+                    
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.stroke();
+            }
+            
+            drawZigzag(ctx, x1, y1, x2, y2, color, thickness) {
+                ctx.strokeStyle = color;
+                ctx.lineWidth = thickness;
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                
+                const segments = 5;
+                const segmentWidth = (x2 - x1) / segments;
+                
+                for (let i = 0; i <= segments; i++) {
+                    const x = x1 + i * segmentWidth;
+                    const y = i % 2 === 0 ? y1 - 10 : y1 + 10;
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            }
+            
+            addEraserMarks(ctx) {
+                // Create eraser effect by drawing semi-transparent white strokes
+                ctx.globalAlpha = 0.7;
+                ctx.strokeStyle = '#FFFFFF';
+                ctx.lineWidth = 8 + Math.random() * 4;
+                
+                const numErases = 1 + Math.floor(Math.random() * 2);
+                for (let i = 0; i < numErases; i++) {
+                    ctx.beginPath();
+                    const x = Math.random() * this.width;
+                    const y = Math.random() * this.height;
+                    ctx.moveTo(x, y);
+                    ctx.lineTo(x + Math.random() * 40 - 20, y + Math.random() * 40 - 20);
+                    ctx.stroke();
+                }
+                
+                ctx.globalAlpha = 1;
+            }
+            
+            addSignature(ctx) {
+                const signatures = ['~A', 'JK', '-B', 'XO', '♥', ':)', 'ZZ', 'ME'];
+                const sig = signatures[Math.floor(Math.random() * signatures.length)];
+                
+                ctx.fillStyle = this.randomColor();
+                ctx.font = '8px monospace';
+                ctx.fillText(sig, this.width - 25, this.height - 10);
+            }
+            
+            randomColor() {
+                return this.colors[Math.floor(Math.random() * this.colors.length)];
+            }
+            
+            randomPenSize() {
+                return this.penSizes[Math.floor(Math.random() * this.penSizes.length)];
+            }
+        }
 
         // WebGL CRT Shader System
         class CRTShaderEffect {
@@ -1257,29 +2497,29 @@
             getMessages() {
                 const messages = {
                     night: [
-                        "🌙 Still coding? Argo handles calls while you sleep!",
-                        "🦉 Night owl detected! Join the midnight club!",
-                        "💤 Your 3 AM ideas are safe with Argo!"
+                        "ðŸŒ™ Still coding? Argo handles calls while you sleep!",
+                        "ðŸ¦‰ Night owl detected! Join the midnight club!",
+                        "ðŸ’¤ Your 3 AM ideas are safe with Argo!"
                     ],
                     morning: [
-                        "☀️ Good morning! Start your day stress-free!",
-                        "☕ Coffee time! Let Argo handle the calls!",
-                        "🌅 Rise & shine with your AI assistant!"
+                        "â˜€ï¸ Good morning! Start your day stress-free!",
+                        "â˜• Coffee time! Let Argo handle the calls!",
+                        "ðŸŒ… Rise & shine with your AI assistant!"
                     ],
                     day: [
-                        "💼 Busy day? Argo's got your back!",
-                        "📊 Boost productivity with Argo!",
-                        "🚀 Work smarter with AI assistance!"
+                        "ðŸ’¼ Busy day? Argo's got your back!",
+                        "ðŸ“Š Boost productivity with Argo!",
+                        "ðŸš€ Work smarter with AI assistance!"
                     ],
                     evening: [
-                        "🌆 Wind down while Argo works!",
-                        "💰 Evening savings await with Argo!",
-                        "🎵 Relax, Argo handles the rest!"
+                        "ðŸŒ† Wind down while Argo works!",
+                        "ðŸ’° Evening savings await with Argo!",
+                        "ðŸŽµ Relax, Argo handles the rest!"
                     ],
                     latenight: [
-                        "🎮 Gaming time? Argo's on call duty!",
-                        "📺 Netflix & let Argo handle it!",
-                        "🌃 Perfect time to join the waitlist!"
+                        "ðŸŽ® Gaming time? Argo's on call duty!",
+                        "ðŸ“º Netflix & let Argo handle it!",
+                        "ðŸŒƒ Perfect time to join the waitlist!"
                     ]
                 };
 
@@ -1435,18 +2675,60 @@
             }
         }
 
-        // Community Gallery System
+        // ============================================
+        // COMMUNITY GALLERY SYSTEM - No Backend Version
+        // Creates programmatically generated doodles for GitHub Pages
+        // ============================================
         class CommunityGallery {
             constructor() {
                 this.doodles = [];
                 this.page = 1;
                 this.isLoading = false;
+                this.generator = new DoodleGenerator(200, 150);
                 this.init();
             }
 
             async init() {
-                await this.loadDoodles();
-                this.setupWebSocket();
+                // Generate initial doodles instead of loading from API
+                this.generateInitialDoodles();
+                // No WebSocket needed for static site
+            }
+
+            generateInitialDoodles() {
+                // Create 22 diverse doodles on page load
+                const doodleTypes = [
+                    ...Array(6).fill('robot'),    // 6 robot doodles
+                    ...Array(4).fill('phone'),    // 4 phone doodles
+                    ...Array(4).fill('ai'),       // 4 AI doodles
+                    ...Array(5).fill('text'),     // 5 text doodles
+                    ...Array(3).fill('abstract')  // 3 abstract doodles
+                ];
+                
+                // Shuffle for randomness
+                doodleTypes.sort(() => Math.random() - 0.5);
+                
+                // Generate doodles with fake user data
+                const userNames = ['Alex', 'Sam', 'Jordan', 'Taylor', 'Morgan', 'Casey', 'Drew', 'Jamie', 'Anonymous'];
+                
+                const generatedDoodles = doodleTypes.map((type, index) => {
+                    return {
+                        id: `doodle_${Date.now()}_${index}`,
+                        imageData: this.generator.generate(type),
+                        userName: Math.random() > 0.3 ? userNames[Math.floor(Math.random() * userNames.length)] : 'Anonymous',
+                        waitlistPosition: Math.floor(Math.random() * 25000) + 1,
+                        reactions: {
+                            heart: Math.floor(Math.random() * 50),
+                            love: Math.floor(Math.random() * 30),
+                            fire: Math.floor(Math.random() * 40),
+                            laugh: Math.floor(Math.random() * 25)
+                        },
+                        isFeatured: Math.random() > 0.85,
+                        createdAt: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
+                    };
+                });
+                
+                this.renderDoodles(generatedDoodles);
+                this.doodles = generatedDoodles;
             }
 
             async loadDoodles() {
@@ -1454,35 +2736,41 @@
                 this.isLoading = true;
 
                 try {
-                    // Simulate API call - replace with actual API
-                    const mockDoodles = this.generateMockDoodles();
-                    this.renderDoodles(mockDoodles);
+                    // Generate more random doodles instead of loading from API
+                    const moreDoodles = this.generateMoreDoodles();
+                    this.renderDoodles(moreDoodles);
+                    this.doodles.push(...moreDoodles);
                 } catch (error) {
-                    console.error('Failed to load doodles:', error);
+                    console.error('Failed to generate doodles:', error);
                 } finally {
                     this.isLoading = false;
                 }
             }
 
-            generateMockDoodles() {
-                const mockDoodles = [];
+            generateMoreDoodles() {
+                const types = ['robot', 'phone', 'ai', 'text', 'abstract'];
+                const userNames = ['Riley', 'Quinn', 'Avery', 'Sage', 'Anonymous'];
+                const newDoodles = [];
+                
                 for (let i = 0; i < 6; i++) {
-                    mockDoodles.push({
+                    const type = types[Math.floor(Math.random() * types.length)];
+                    newDoodles.push({
                         id: `doodle_${Date.now()}_${i}`,
-                        imageData: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9iMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRTZGMkZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJQcmVzcyBTdGFydCAyUCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwNjZDQyI+RE9PRExFPC90ZXh0Pjwvc3ZnPg==',
-                        userName: `User${Math.floor(Math.random() * 9999)}`,
-                        waitlistPosition: Math.floor(Math.random() * 10000),
+                        imageData: this.generator.generate(type),
+                        userName: userNames[Math.floor(Math.random() * userNames.length)],
+                        waitlistPosition: Math.floor(Math.random() * 25000) + 1,
                         reactions: {
-                            like: Math.floor(Math.random() * 100),
-                            love: Math.floor(Math.random() * 50),
-                            fire: Math.floor(Math.random() * 30),
-                            laugh: Math.floor(Math.random() * 20)
+                            heart: Math.floor(Math.random() * 20),
+                            love: Math.floor(Math.random() * 15),
+                            fire: Math.floor(Math.random() * 25),
+                            laugh: Math.floor(Math.random() * 10)
                         },
-                        isFeatured: Math.random() > 0.8,
+                        isFeatured: false,
                         createdAt: new Date().toISOString()
                     });
                 }
-                return mockDoodles;
+                
+                return newDoodles;
             }
 
             renderDoodles(doodles) {
@@ -1500,19 +2788,19 @@
                         </div>
                         <div class="doodle-reactions">
                             <button class="reaction-btn" data-reaction="like" data-id="${doodle.id}">
-                                ❤️
+                                â¤ï¸
                                 ${doodle.reactions.like > 0 ? `<span class="reaction-count">${doodle.reactions.like}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="love" data-id="${doodle.id}">
-                                😍
+                                ðŸ˜
                                 ${doodle.reactions.love > 0 ? `<span class="reaction-count">${doodle.reactions.love}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="fire" data-id="${doodle.id}">
-                                🔥
+                                ðŸ”¥
                                 ${doodle.reactions.fire > 0 ? `<span class="reaction-count">${doodle.reactions.fire}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="laugh" data-id="${doodle.id}">
-                                😂
+                                ðŸ˜‚
                                 ${doodle.reactions.laugh > 0 ? `<span class="reaction-count">${doodle.reactions.laugh}</span>` : ''}
                             </button>
                         </div>
@@ -1539,38 +2827,849 @@
                 const reaction = btn.dataset.reaction;
                 const doodleId = btn.dataset.id;
 
+                // Check if user already reacted (using localStorage)
+                const reactionKey = `reaction_${doodleId}_${reaction}`;
+                if (localStorage.getItem(reactionKey)) {
+                    // User already reacted, show feedback
+                    btn.style.animation = 'shake 0.3s';
+                    setTimeout(() => btn.style.animation = '', 300);
+                    return;
+                }
+
                 // Animate button
                 btn.classList.add('active');
                 setTimeout(() => btn.classList.remove('active'), 500);
 
-                // Update count (in real app, this would be an API call)
+                // Update count
                 const countEl = btn.querySelector('.reaction-count');
                 if (countEl) {
                     const currentCount = parseInt(countEl.textContent);
                     countEl.textContent = currentCount + 1;
                 } else {
-                    btn.innerHTML += '<span class="reaction-count">1</span>';
+                    // Find the pixel icon and add count after it
+                    const pixelIcon = btn.querySelector('.pixel-icon');
+                    if (pixelIcon) {
+                        const newCount = document.createElement('span');
+                        newCount.className = 'reaction-count';
+                        newCount.textContent = '1';
+                        pixelIcon.parentNode.appendChild(newCount);
+                    } else {
+                        btn.innerHTML += '<span class="reaction-count">1</span>';
+                    }
                 }
 
-                // Send to server (mock)
-                this.sendReaction(doodleId, reaction);
+                // Store reaction in localStorage
+                localStorage.setItem(reactionKey, 'true');
+                
+                // Simulate live update feel
+                this.simulateLiveUpdate();
             }
 
-            async sendReaction(doodleId, reaction) {
-                // In production, this would be an API call
-                console.log(`Reaction ${reaction} added to doodle ${doodleId}`);
-            }
-
-            setupWebSocket() {
-                // In production, connect to real WebSocket server
-                // Mock WebSocket updates
-                setInterval(() => {
-                    if (Math.random() > 0.7) {
-                        const newDoodle = this.generateMockDoodles()[0];
-                        this.renderDoodles([newDoodle]);
+            simulateLiveUpdate() {
+                // Occasionally update visitor count to simulate activity
+                if (Math.random() > 0.7) {
+                    const visitorCount = document.getElementById('visitorCount');
+                    if (visitorCount) {
+                        const current = parseInt(visitorCount.textContent.replace(',', ''));
+                        visitorCount.textContent = (current + Math.floor(Math.random() * 5)).toLocaleString();
                     }
-                }, 10000);
+                }
             }
+        }
+        
+        // ============================================
+        // SAVE & SHARE FUNCTIONALITY - No Backend Version
+        // Works completely client-side for GitHub Pages
+        // ============================================
+        
+        // Save doodle as image
+        function saveDoodleAsImage() {
+            const canvas = document.getElementById('enhancedCanvas');
+            
+            // Generate filename with timestamp
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
+            const filename = `argo-doodle-${timestamp}.png`;
+            
+            // For mobile, open in new tab
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                const imageData = canvas.toDataURL('image/png');
+                const newWindow = window.open();
+                newWindow.document.write(`
+                    <html>
+                        <head>
+                            <title>Your Argo Doodle</title>
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <style>
+                                body { 
+                                    margin: 0; 
+                                    background: #000; 
+                                    display: flex; 
+                                    justify-content: center; 
+                                    align-items: center; 
+                                    min-height: 100vh;
+                                    font-family: monospace;
+                                }
+                                img { 
+                                    max-width: 90%; 
+                                    height: auto; 
+                                    border: 3px solid #0066CC;
+                                    background: white;
+                                }
+                                .instructions {
+                                    position: fixed;
+                                    top: 10px;
+                                    left: 10px;
+                                    right: 10px;
+                                    color: #0066CC;
+                                    background: rgba(255,255,255,0.9);
+                                    padding: 10px;
+                                    border-radius: 5px;
+                                    text-align: center;
+                                    font-size: 14px;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="instructions">Long-press image to save to your device</div>
+                            <img src="${imageData}" alt="Your doodle">
+                        </body>
+                    </html>
+                `);
+                showSaveSuccessNotification();
+            } else {
+                // Desktop: direct download
+                canvas.toBlob((blob) => {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = filename;
+                    link.href = url;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    URL.revokeObjectURL(url);
+                    showSaveSuccessNotification();
+                    
+                    // Also save to localStorage gallery
+                    saveToLocalGallery(canvas.toDataURL('image/png'));
+                }, 'image/png');
+            }
+        }
+        
+        // Show save success notification
+        function showSaveSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'save-notification pixel-notification';
+            notification.innerHTML = `
+                <span class="pixel-icon checkmark"></span>
+                DOODLE SAVED!
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #0066CC;
+                color: #FFFFFF;
+                padding: 12px 20px;
+                border: 3px solid #FFFFFF;
+                box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+                font-family: 'Press Start 2P', monospace;
+                font-size: 10px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+                z-index: 10000;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            // Remove after 2 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        // Share doodle function
+        async function shareDoodle() {
+            const canvas = document.getElementById('enhancedCanvas');
+            
+            // Check if Web Share API is supported
+            if (navigator.share) {
+                try {
+                    // Try to share with image
+                    const blob = await new Promise(resolve => {
+                        canvas.toBlob(resolve, 'image/png');
+                    });
+                    
+                    const file = new File([blob], 'my-argo-doodle.png', { type: 'image/png' });
+                    
+                    // Check if can share files
+                    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                        await navigator.share({
+                            title: 'My Argo Doodle',
+                            text: 'Check out my Pictochat-style doodle for Argo!',
+                            files: [file]
+                        });
+                        showShareSuccessNotification();
+                    } else {
+                        // Fallback: share text only
+                        await navigator.share({
+                            title: 'Argo - AI Voice Assistant',
+                            text: 'I just created a doodle on the Argo landing page! Check it out:',
+                            url: window.location.href
+                        });
+                        showShareSuccessNotification();
+                    }
+                } catch (error) {
+                    if (error.name !== 'AbortError') {
+                        console.log('Share failed:', error);
+                        fallbackShareOptions();
+                    }
+                }
+            } else {
+                // Fallback for browsers without Web Share API
+                fallbackShareOptions();
+            }
+        }
+        
+        // Fallback share options modal
+        function fallbackShareOptions() {
+            const modal = document.createElement('div');
+            modal.className = 'share-modal pixel-modal';
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10001;
+            `;
+            
+            modal.innerHTML = `
+                <div class="modal-content" style="
+                    background: white;
+                    border: 4px solid #0066CC;
+                    border-radius: 8px;
+                    padding: 20px;
+                    max-width: 400px;
+                    width: 90%;
+                    font-family: 'Press Start 2P', monospace;
+                    box-shadow: 0 0 20px rgba(0, 102, 204, 0.5);
+                ">
+                    <button class="modal-close" onclick="this.closest('.share-modal').remove()" style="
+                        float: right;
+                        background: #FF4444;
+                        color: white;
+                        border: none;
+                        padding: 5px 10px;
+                        font-size: 16px;
+                        cursor: pointer;
+                        font-family: monospace;
+                    ">×</button>
+                    
+                    <h3 style="color: #0066CC; font-size: 14px; margin: 0 0 15px 0;">SHARE YOUR DOODLE</h3>
+                    <p style="font-size: 8px; color: #666; margin-bottom: 20px;">Choose a platform:</p>
+                    
+                    <div class="share-buttons" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <button class="share-btn" onclick="shareToTwitter()" style="
+                            flex: 1;
+                            min-width: 120px;
+                            background: #1DA1F2;
+                            color: white;
+                            border: 3px solid #0066CC;
+                            padding: 10px;
+                            font-size: 8px;
+                            cursor: pointer;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            TWITTER
+                        </button>
+                        
+                        <button class="share-btn" onclick="shareToFacebook()" style="
+                            flex: 1;
+                            min-width: 120px;
+                            background: #4267B2;
+                            color: white;
+                            border: 3px solid #0066CC;
+                            padding: 10px;
+                            font-size: 8px;
+                            cursor: pointer;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            FACEBOOK
+                        </button>
+                        
+                        <button class="share-btn" onclick="copyShareLink()" style="
+                            flex: 1;
+                            min-width: 120px;
+                            background: #FFB800;
+                            color: #0066CC;
+                            border: 3px solid #0066CC;
+                            padding: 10px;
+                            font-size: 8px;
+                            cursor: pointer;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            COPY LINK
+                        </button>
+                        
+                        <button class="share-btn" onclick="saveDoodleAsImage(); this.closest('.share-modal').remove()" style="
+                            flex: 1;
+                            min-width: 120px;
+                            background: #0066CC;
+                            color: white;
+                            border: 3px solid #FFB800;
+                            padding: 10px;
+                            font-size: 8px;
+                            cursor: pointer;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            DOWNLOAD
+                        </button>
+                    </div>
+                    
+                    <p style="font-size: 6px; color: #999; margin-top: 15px; text-align: center;">
+                        Note: Download your doodle first, then share the image!
+                    </p>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on background click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) modal.remove();
+            });
+        }
+        
+        // Share to Twitter
+        function shareToTwitter() {
+            const text = encodeURIComponent('I just created a Pictochat-style doodle for Argo AI! Check out their awesome landing page:');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            document.querySelector('.share-modal')?.remove();
+        }
+        
+        // Share to Facebook
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            document.querySelector('.share-modal')?.remove();
+        }
+        
+        // Copy share link
+        function copyShareLink() {
+            const text = `Check out my Pictochat doodle on Argo's page! ${window.location.href}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccessNotification();
+                document.querySelector('.share-modal')?.remove();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showCopySuccessNotification();
+                document.querySelector('.share-modal')?.remove();
+            });
+        }
+        
+        // Show share success notification
+        function showShareSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = '<span class="pixel-icon share"></span> SHARED!';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #FFB800;
+                color: #0066CC;
+                padding: 12px 20px;
+                border: 3px solid #0066CC;
+                box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+                font-family: 'Press Start 2P', monospace;
+                font-size: 10px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+                z-index: 10000;
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        // Show copy success notification  
+        function showCopySuccessNotification() {
+            const notification = document.createElement('div');
+            notification.innerHTML = '<span class="pixel-icon link"></span> LINK COPIED!';
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #44FF44;
+                color: #000;
+                padding: 12px 20px;
+                border: 3px solid #000;
+                box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+                font-family: 'Press Start 2P', monospace;
+                font-size: 10px;
+                opacity: 0;
+                transform: translateY(-20px);
+                transition: all 0.3s ease;
+                z-index: 10000;
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => {
+                notification.style.opacity = '1';
+                notification.style.transform = 'translateY(0)';
+            }, 10);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateY(-20px)';
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        // Save to local gallery
+        function saveToLocalGallery(imageData) {
+            // Get existing doodles from localStorage
+            let myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            
+            // Add new doodle with timestamp
+            myDoodles.push({
+                id: Date.now(),
+                imageData: imageData,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Limit to 10 most recent doodles
+            if (myDoodles.length > 10) {
+                myDoodles = myDoodles.slice(-10);
+            }
+            
+            // Save back to localStorage
+            localStorage.setItem('myArgoDoodles', JSON.stringify(myDoodles));
+            
+            // Display in "My Doodles" section
+            displayMyDoodles();
+        }
+        
+        // Display user's saved doodles
+        function displayMyDoodles() {
+            const myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            const container = document.getElementById('myDoodlesContainer');
+            
+            if (!container) return;
+            
+            if (myDoodles.length === 0) {
+                container.innerHTML = '<p class="empty-state" style="text-align: center; color: #999; font-size: 10px;">Your doodles will appear here!</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            container.style.cssText = 'display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px;';
+            
+            myDoodles.reverse().forEach(doodle => {
+                const item = document.createElement('div');
+                item.className = 'my-doodle-item';
+                item.style.cssText = 'background: white; border: 3px solid #0066CC; border-radius: 8px; padding: 10px; position: relative;';
+                item.innerHTML = `
+                    <img src="${doodle.imageData}" alt="My doodle" style="width: 100%; height: auto; display: block;">
+                    <div class="doodle-actions" style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button onclick="downloadDoodle('${doodle.id}')" title="Download" style="
+                            flex: 1;
+                            background: #0066CC;
+                            color: white;
+                            border: none;
+                            padding: 5px;
+                            cursor: pointer;
+                            font-size: 8px;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            SAVE
+                        </button>
+                        <button onclick="deleteDoodle('${doodle.id}')" title="Delete" style="
+                            flex: 1;
+                            background: #FF4444;
+                            color: white;
+                            border: none;
+                            padding: 5px;
+                            cursor: pointer;
+                            font-size: 8px;
+                            font-family: 'Press Start 2P', monospace;
+                        ">
+                            DELETE
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // Download doodle from gallery
+        function downloadDoodle(id) {
+            const myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            const doodle = myDoodles.find(d => d.id == id);
+            
+            if (doodle) {
+                const link = document.createElement('a');
+                link.download = `my-doodle-${id}.png`;
+                link.href = doodle.imageData;
+                link.click();
+                showSaveSuccessNotification();
+            }
+        }
+        
+        // Delete doodle from gallery
+        function deleteDoodle(id) {
+            let myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            myDoodles = myDoodles.filter(d => d.id != id);
+            localStorage.setItem('myArgoDoodles', JSON.stringify(myDoodles));
+            displayMyDoodles();
+        }
+        
+        // Fallback share modal
+        function fallbackShareOptions() {
+            const modal = document.createElement('div');
+            modal.className = 'share-modal pixel-modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <button class="modal-close" onclick="this.closest('.share-modal').remove()">×</button>
+                    <h3>SHARE YOUR DOODLE</h3>
+                    <p class="modal-subtitle">Choose a platform:</p>
+                    
+                    <div class="share-buttons">
+                        <button class="share-btn twitter-btn" onclick="shareToTwitter()">
+                            <span class="pixel-icon twitter"></span>
+                            TWITTER
+                        </button>
+                        
+                        <button class="share-btn facebook-btn" onclick="shareToFacebook()">
+                            <span class="pixel-icon facebook"></span>
+                            FACEBOOK
+                        </button>
+                        
+                        <button class="share-btn copy-btn" onclick="copyShareLink()">
+                            <span class="pixel-icon link"></span>
+                            COPY LINK
+                        </button>
+                        
+                        <button class="share-btn download-btn" onclick="saveDoodleAsImage()">
+                            <span class="pixel-icon download"></span>
+                            DOWNLOAD
+                        </button>
+                    </div>
+                    
+                    <p class="modal-note">
+                        Note: Download your doodle, then share the image on your platform of choice!
+                    </p>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            setTimeout(() => modal.classList.add('show'), 10);
+            
+            // Generate pixel icons for share buttons
+            const pixelIcons = modal.querySelectorAll('.pixel-icon');
+            pixelIcons.forEach(icon => {
+                const type = icon.className.split(' ')[1];
+                const imgData = PixelIconGenerator.createIcon(type);
+                const img = document.createElement('img');
+                img.src = imgData;
+                img.className = icon.className;
+                icon.parentNode.replaceChild(img, icon);
+            });
+        }
+        
+        window.shareToTwitter = function() {
+            const text = encodeURIComponent('I just created a Pictochat-style doodle for Argo AI! Check out their awesome landing page:');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            document.querySelector('.share-modal')?.remove();
+        };
+        
+        window.shareToFacebook = function() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            document.querySelector('.share-modal')?.remove();
+        };
+        
+        window.copyShareLink = function() {
+            const text = `Check out my Pictochat doodle on Argo's page! ${window.location.href}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showCopySuccessNotification();
+            }).catch(() => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showCopySuccessNotification();
+            });
+            document.querySelector('.share-modal')?.remove();
+        };
+        
+        // Save to local gallery
+        function saveToLocalGallery() {
+            const canvas = document.getElementById('enhancedCanvas');
+            const imageData = canvas.toDataURL('image/png');
+            
+            let myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            
+            myDoodles.push({
+                id: Date.now(),
+                imageData: imageData,
+                timestamp: new Date().toISOString()
+            });
+            
+            if (myDoodles.length > 10) {
+                myDoodles = myDoodles.slice(-10);
+            }
+            
+            localStorage.setItem('myArgoDoodles', JSON.stringify(myDoodles));
+            
+            displayMyDoodles();
+            showSaveSuccessNotification();
+        }
+        
+        // Display user's saved doodles
+        function displayMyDoodles() {
+            const myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            const container = document.getElementById('myDoodlesContainer');
+            
+            if (!container) return;
+            
+            if (myDoodles.length === 0) {
+                container.innerHTML = '<p class="empty-state">Your doodles will appear here!</p>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            myDoodles.reverse().forEach(doodle => {
+                const item = document.createElement('div');
+                item.className = 'my-doodle-item';
+                item.innerHTML = `
+                    <img src="${doodle.imageData}" alt="My doodle">
+                    <div class="doodle-actions">
+                        <button onclick="downloadDoodle('${doodle.id}')" title="Download">
+                            <img src="${PixelIconGenerator.createIcon('download')}" class="pixel-icon small" alt="Download">
+                        </button>
+                        <button onclick="deleteDoodle('${doodle.id}')" title="Delete">
+                            <img src="${PixelIconGenerator.createIcon('trash')}" class="pixel-icon small" alt="Delete">
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // Download a saved doodle
+        window.downloadDoodle = function(id) {
+            const myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            const doodle = myDoodles.find(d => d.id == id);
+            
+            if (doodle) {
+                const link = document.createElement('a');
+                link.download = `argo-doodle-${id}.png`;
+                link.href = doodle.imageData;
+                link.click();
+            }
+        };
+        
+        // Delete a saved doodle
+        window.deleteDoodle = function(id) {
+            let myDoodles = JSON.parse(localStorage.getItem('myArgoDoodles') || '[]');
+            myDoodles = myDoodles.filter(d => d.id != id);
+            localStorage.setItem('myArgoDoodles', JSON.stringify(myDoodles));
+            displayMyDoodles();
+        };
+        
+        // Show success notifications
+        function showSaveSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'save-notification pixel-notification';
+            const checkIcon = PixelIconGenerator.createIcon('check', 16, '#FFFFFF');
+            notification.innerHTML = `
+                <img src="${checkIcon}" class="pixel-icon" alt="Check">
+                DOODLE SAVED!
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        function showShareSuccessNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'save-notification pixel-notification';
+            const checkIcon = PixelIconGenerator.createIcon('check', 16, '#FFFFFF');
+            notification.innerHTML = `
+                <img src="${checkIcon}" class="pixel-icon" alt="Check">
+                SHARED SUCCESSFULLY!
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        function showCopySuccessNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'save-notification pixel-notification';
+            const checkIcon = PixelIconGenerator.createIcon('check', 16, '#FFFFFF');
+            notification.innerHTML = `
+                <img src="${checkIcon}" class="pixel-icon" alt="Check">
+                LINK COPIED!
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 2000);
+        }
+        
+        // ============================================
+        // GALLERY INITIALIZATION WITH FAKE DOODLES
+        // Added: Phase 3 Enhancement
+        // ============================================
+        
+        function initializeGalleryWithFakeDoodles() {
+            const gallery = document.getElementById('galleryGrid');
+            if (!gallery) return;
+            
+            // Clear existing placeholder content
+            gallery.innerHTML = '';
+            
+            const generator = new DoodleGenerator(200, 150);
+            
+            // Define distribution of doodle types for variety
+            const types = [
+                ...Array(6).fill('robot'),    // 6 robot doodles
+                ...Array(4).fill('phone'),    // 4 phone doodles
+                ...Array(4).fill('ai'),       // 4 AI doodles
+                ...Array(5).fill('text'),     // 5 text doodles
+                ...Array(3).fill('abstract')  // 3 abstract doodles
+            ];
+            
+            // Shuffle for randomness
+            types.sort(() => Math.random() - 0.5);
+            
+            // Generate new doodles
+            types.forEach((type, index) => {
+                setTimeout(() => {
+                    const imageData = generator.generate(type);
+                    
+                    const doodleItem = document.createElement('div');
+                    doodleItem.className = 'doodle-card';
+                    doodleItem.style.animationDelay = `${index * 0.05}s`;
+                    
+                    // Random reaction counts for realism
+                    const likes = Math.floor(Math.random() * 50);
+                    const loves = Math.floor(Math.random() * 30);
+                    const fires = Math.floor(Math.random() * 25);
+                    const laughs = Math.floor(Math.random() * 20);
+                    
+                    // Create pixel icons for reactions
+                    const heartIcon = PixelIconGenerator.createIcon('heart', 12, '#FF0066');
+                    const fireIcon = PixelIconGenerator.createIcon('fire', 12, '#FF6600');
+                    const laughIcon = PixelIconGenerator.createIcon('laugh', 12, '#FFCC00');
+                    const thumbsUpIcon = PixelIconGenerator.createIcon('thumbsUp', 12, '#0066CC');
+                    
+                    doodleItem.innerHTML = `
+                        <div class="doodle-image">
+                            <img src="${imageData}" alt="Community doodle ${index + 1}" 
+                                 style="width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated;">
+                        </div>
+                        <div class="doodle-reactions">
+                            <button class="reaction-btn" data-reaction="like" data-count="${likes}">
+                                <img src="${heartIcon}" class="pixel-icon small" alt="Like">
+                                ${likes > 0 ? `<span class="reaction-count">${likes}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="love" data-count="${loves}">
+                                <img src="${thumbsUpIcon}" class="pixel-icon small" alt="Love">
+                                ${loves > 0 ? `<span class="reaction-count">${loves}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="fire" data-count="${fires}">
+                                <img src="${fireIcon}" class="pixel-icon small" alt="Fire">
+                                ${fires > 0 ? `<span class="reaction-count">${fires}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="laugh" data-count="${laughs}">
+                                <img src="${laughIcon}" class="pixel-icon small" alt="Laugh">
+                                ${laughs > 0 ? `<span class="reaction-count">${laughs}</span>` : ''}
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Add reaction click handlers
+                    doodleItem.querySelectorAll('.reaction-btn').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            e.stopPropagation();
+                            const currentCount = parseInt(this.dataset.count) || 0;
+                            const newCount = currentCount + 1;
+                            this.dataset.count = newCount;
+                            
+                            // Update or add count display
+                            let countEl = this.querySelector('.reaction-count');
+                            if (!countEl) {
+                                countEl = document.createElement('span');
+                                countEl.className = 'reaction-count';
+                                this.appendChild(countEl);
+                            }
+                            countEl.textContent = newCount;
+                            
+                            // Add animation
+                            this.classList.add('active');
+                            setTimeout(() => this.classList.remove('active'), 500);
+                        });
+                    });
+                    
+                    gallery.appendChild(doodleItem);
+                }, index * 100); // Stagger the generation for visual effect
+            });
         }
 
         // Enhanced Drawing Canvas
@@ -1753,44 +3852,16 @@
             }
 
             save() {
-                const link = document.createElement('a');
-                link.download = `argo-doodle-${Date.now()}.png`;
-                link.href = this.canvas.toDataURL();
-                link.click();
+                // Call the enhanced save function
+                saveDoodleAsImage();
                 
-                // Show achievement
-                this.showAchievement('Artist', 'Saved your masterpiece!');
+                // Also save to local gallery
+                saveToLocalGallery();
             }
 
             async share() {
-                try {
-                    // Convert canvas to blob
-                    const blob = await new Promise(resolve => {
-                        this.canvas.toBlob(resolve, 'image/png');
-                    });
-
-                    // In production, upload to server
-                    // For now, just show achievement
-                    this.showAchievement('Community Artist', 'Shared with the community!');
-                    
-                    // Add to gallery (mock)
-                    const mockDoodle = {
-                        id: `user_${Date.now()}`,
-                        imageData: this.canvas.toDataURL(),
-                        userName: 'You',
-                        reactions: { like: 0, love: 0, fire: 0, laugh: 0 },
-                        isFeatured: false
-                    };
-                    
-                    // Prepend to gallery
-                    const gallery = document.getElementById('galleryGrid');
-                    if (gallery && gallery.firstChild) {
-                        const card = this.createDoodleCard(mockDoodle);
-                        gallery.insertBefore(card, gallery.firstChild);
-                    }
-                } catch (error) {
-                    console.error('Failed to share doodle:', error);
-                }
+                // Call the enhanced share function
+                shareDoodle();
             }
 
             createDoodleCard(doodle) {
@@ -1801,10 +3872,10 @@
                         <img src="${doodle.imageData}" alt="Your doodle" style="width: 100%; height: 100%;">
                     </div>
                     <div class="doodle-reactions">
-                        <button class="reaction-btn">❤️</button>
-                        <button class="reaction-btn">😍</button>
-                        <button class="reaction-btn">🔥</button>
-                        <button class="reaction-btn">😂</button>
+                        <button class="reaction-btn">â¤ï¸</button>
+                        <button class="reaction-btn">ðŸ˜</button>
+                        <button class="reaction-btn">ðŸ”¥</button>
+                        <button class="reaction-btn">ðŸ˜‚</button>
                     </div>
                 `;
                 return card;
@@ -1918,6 +3989,9 @@
 
             // Setup performance toggle
             setupPerformanceToggle();
+            
+            // Initialize My Doodles section
+            displayMyDoodles();
 
             // Level navigation
             document.querySelectorAll('.level-dot').forEach((dot, index) => {
@@ -1946,6 +4020,8 @@
             console.log('%c🚀 ARGO PHASE 3 INITIALIZED', 
                 'background: linear-gradient(90deg, #0066CC, #FFB800); color: white; font-size: 24px; font-weight: bold; padding: 10px;');
             console.log('%c✨ Award-winning experience loaded!', 'color: #FFB800; font-size: 14px;');
+            console.log('%c🎨 Community gallery with programmatic doodles ready!', 'color: #00CC00; font-size: 12px;');
+            console.log('%c💾 Save & Share functionality active!', 'color: #FF66CC; font-size: 12px;');
         });
     </script>
 </body>
