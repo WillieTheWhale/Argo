@@ -714,7 +714,7 @@
         }
 
         .color-swatch.active::after {
-            content: 'âœ“';
+            content: '       ';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -1301,21 +1301,6 @@
             </div>
         </div>
     </section>
-    
-    <!-- My Doodles Section -->
-    <section class="my-doodles-section">
-        <div class="section-content">
-            <div class="my-doodles-header">
-                <h2 class="my-doodles-title">My Doodles</h2>
-                <p style="font-size: 10px; color: var(--argo-blue); margin-bottom: 20px;">
-                    Your saved creations appear here!
-                </p>
-            </div>
-            <div id="myDoodlesContainer">
-                <!-- User's saved doodles will appear here -->
-            </div>
-        </div>
-    </section>
 
     <!-- CTA Section -->
     <section class="section">
@@ -1327,8 +1312,8 @@
                 <a href="#waitlist" class="tool-btn" style="font-size: 16px; padding: 20px 40px; background: linear-gradient(180deg, var(--argo-gold) 0%, var(--argo-dark-gold) 100%); color: white; border-width: 4px;">
                     GET EARLY ACCESS
                 </a>
-                <p style="margin-top: 20px; font-size: 10px; color: var(--argo-blue);">
-                    ðŸ”¥ Limited spots â€¢ Launching Q2 2025
+                <p style="margin-top: 40px; font-size: 10px; color: var(--argo-blue);">
+                    Limited spots • Launching Q2 2025
                 </p>
             </div>
         </div>
@@ -1336,7 +1321,7 @@
 
     <!-- Achievement Badge (Hidden by default) -->
     <div class="achievement-badge" id="achievementBadge" style="display: none;">
-        <div class="achievement-icon">ðŸ†</div>
+        <div class="achievement-icon">★</div>
         <div class="achievement-title">Achievement Unlocked!</div>
         <div class="achievement-desc" id="achievementDesc">Master Artist</div>
     </div>
@@ -2195,7 +2180,7 @@
             }
             
             addSignature(ctx) {
-                const signatures = ['~A', 'JK', '-B', 'XO', '♥', ':)', 'ZZ', 'ME'];
+                const signatures = ['~A', 'JK', '-B', 'XO', '   ', ':)', 'ZZ', 'ME'];
                 const sig = signatures[Math.floor(Math.random() * signatures.length)];
                 
                 ctx.fillStyle = this.randomColor();
@@ -2497,29 +2482,29 @@
             getMessages() {
                 const messages = {
                     night: [
-                        "ðŸŒ™ Still coding? Argo handles calls while you sleep!",
-                        "ðŸ¦‰ Night owl detected! Join the midnight club!",
-                        "ðŸ’¤ Your 3 AM ideas are safe with Argo!"
+                        "Still coding? Argo handles calls while you sleep!",
+                        "Night owl detected! Join the midnight club!",
+                        "Your 3 AM ideas are safe with Argo!"
                     ],
                     morning: [
-                        "â˜€ï¸ Good morning! Start your day stress-free!",
-                        "â˜• Coffee time! Let Argo handle the calls!",
-                        "ðŸŒ… Rise & shine with your AI assistant!"
+                        "Good morning! Start your day stress-free!",
+                        "Coffee time! Let Argo handle the calls!",
+                        "Rise & shine with your AI assistant!"
                     ],
                     day: [
-                        "ðŸ’¼ Busy day? Argo's got your back!",
-                        "ðŸ“Š Boost productivity with Argo!",
-                        "ðŸš€ Work smarter with AI assistance!"
+                        "Busy day? Argo's got your back!",
+                        "Boost productivity with Argo!",
+                        "Work smarter with AI assistance!"
                     ],
                     evening: [
-                        "ðŸŒ† Wind down while Argo works!",
-                        "ðŸ’° Evening savings await with Argo!",
-                        "ðŸŽµ Relax, Argo handles the rest!"
+                        "Wind down while Argo works!",
+                        "Evening savings await with Argo!",
+                        "Relax, Argo handles the rest!"
                     ],
                     latenight: [
-                        "ðŸŽ® Gaming time? Argo's on call duty!",
-                        "ðŸ“º Netflix & let Argo handle it!",
-                        "ðŸŒƒ Perfect time to join the waitlist!"
+                        "Gaming time? Argo's on call duty!",
+                        "Netflix & let Argo handle it!",
+                        "Perfect time to join the waitlist!"
                     ]
                 };
 
@@ -2788,19 +2773,19 @@
                         </div>
                         <div class="doodle-reactions">
                             <button class="reaction-btn" data-reaction="like" data-id="${doodle.id}">
-                                â¤ï¸
+                                            
                                 ${doodle.reactions.like > 0 ? `<span class="reaction-count">${doodle.reactions.like}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="love" data-id="${doodle.id}">
-                                ðŸ˜
+                                        
                                 ${doodle.reactions.love > 0 ? `<span class="reaction-count">${doodle.reactions.love}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="fire" data-id="${doodle.id}">
-                                ðŸ”¥
+                                         
                                 ${doodle.reactions.fire > 0 ? `<span class="reaction-count">${doodle.reactions.fire}</span>` : ''}
                             </button>
                             <button class="reaction-btn" data-reaction="laugh" data-id="${doodle.id}">
-                                ðŸ˜‚
+                                         
                                 ${doodle.reactions.laugh > 0 ? `<span class="reaction-count">${doodle.reactions.laugh}</span>` : ''}
                             </button>
                         </div>
@@ -3078,7 +3063,7 @@
                         font-size: 16px;
                         cursor: pointer;
                         font-family: monospace;
-                    ">×</button>
+                    ">  </button>
                     
                     <h3 style="color: #0066CC; font-size: 14px; margin: 0 0 15px 0;">SHARE YOUR DOODLE</h3>
                     <p style="font-size: 8px; color: #666; margin-bottom: 20px;">Choose a platform:</p>
@@ -3362,7 +3347,7 @@
             modal.className = 'share-modal pixel-modal';
             modal.innerHTML = `
                 <div class="modal-content">
-                    <button class="modal-close" onclick="this.closest('.share-modal').remove()">×</button>
+                    <button class="modal-close" onclick="this.closest('.share-modal').remove()">  </button>
                     <h3>SHARE YOUR DOODLE</h3>
                     <p class="modal-subtitle">Choose a platform:</p>
                     
@@ -3872,10 +3857,10 @@
                         <img src="${doodle.imageData}" alt="Your doodle" style="width: 100%; height: 100%;">
                     </div>
                     <div class="doodle-reactions">
-                        <button class="reaction-btn">â¤ï¸</button>
-                        <button class="reaction-btn">ðŸ˜</button>
-                        <button class="reaction-btn">ðŸ”¥</button>
-                        <button class="reaction-btn">ðŸ˜‚</button>
+                        <button class="reaction-btn">            </button>
+                        <button class="reaction-btn">        </button>
+                        <button class="reaction-btn">         </button>
+                        <button class="reaction-btn">         </button>
                     </div>
                 `;
                 return card;
@@ -4017,11 +4002,11 @@
             `;
             document.head.appendChild(style);
 
-            console.log('%c🚀 ARGO PHASE 3 INITIALIZED', 
+            console.log('%c     ARGO PHASE 3 INITIALIZED', 
                 'background: linear-gradient(90deg, #0066CC, #FFB800); color: white; font-size: 24px; font-weight: bold; padding: 10px;');
-            console.log('%c✨ Award-winning experience loaded!', 'color: #FFB800; font-size: 14px;');
-            console.log('%c🎨 Community gallery with programmatic doodles ready!', 'color: #00CC00; font-size: 12px;');
-            console.log('%c💾 Save & Share functionality active!', 'color: #FF66CC; font-size: 12px;');
+            console.log('%c    Award-winning experience loaded!', 'color: #FFB800; font-size: 14px;');
+            console.log('%c     Community gallery with programmatic doodles ready!', 'color: #00CC00; font-size: 12px;');
+            console.log('%c     Save & Share functionality active!', 'color: #FF66CC; font-size: 12px;');
         });
     </script>
 </body>
