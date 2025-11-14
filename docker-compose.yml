@@ -1,0 +1,178 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: argo-postgres
+    environment:
+      POSTGRES_DB: argo_db
+      POSTGRES_USER: argo_user
+      POSTGRES_PASSWORD: argo_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U argo_user -d argo_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: argo-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Node.js API Server
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: argo-api
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      WS_PORT: 8080
+      DATABASE_URL: postgresql://argo_user:argo_password@postgres:5432/argo_db
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: development-secret-change-in-production
+      ALLOWED_ORIGINS: http://localhost:80,http://localhost:3001
+    volumes:
+      - ./server.js:/app/server.js
+      - ./uploads:/app/uploads
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: npm run dev
+
+  # Nginx Web Server
+  nginx:
+    image: nginx:alpine
+    container_name: argo-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./argo-phase3.html:/usr/share/nginx/html/index.html:ro
+      - ./uploads:/usr/share/nginx/html/uploads:ro
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # pgAdmin for Database Management (optional)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: argo-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@argo.ai
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    profiles:
+      - debug
+
+  # Redis Commander for Cache Management (optional)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: argo-redis-commander
+    environment:
+      REDIS_HOSTS: local:redis:6379
+    ports:
+      - "8081:8081"
+    depends_on:
+      - redis
+    profiles:
+      - debug
+
+  # Prometheus for Metrics (optional)
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: argo-prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    profiles:
+      - monitoring
+
+  # Grafana for Visualization (optional)
+  grafana:
+    image: grafana/grafana:latest
+    container_name: argo-grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_INSTALL_PLUGINS: redis-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+    ports:
+      - "3001:3000"
+    depends_on:
+      - prometheus
+    profiles:
+      - monitoring
+
+  # Development Helper - Live Reload
+  livereload:
+    image: node:18-alpine
+    container_name: argo-livereload
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: npx livereload /app -e html,css,js -d
+    ports:
+      - "35729:35729"
+    profiles:
+      - dev
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  node_modules:
+    driver: local
+
+networks:
+  default:
+    name: argo-network
+    driver: bridge

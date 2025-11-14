@@ -1,0 +1,1952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Argo - Revolutionary AI Voice Assistant | Transform Your Digital Life</title>
+    <meta name="description" content="Experience the future of AI voice technology. Argo negotiates bills, schedules meetings, and handles calls with your voice. Join 25,000+ early adopters.">
+    <meta name="keywords" content="AI voice assistant, voice cloning, bill negotiation, AI agent, voice technology, personal assistant">
+    
+    <!-- Open Graph Meta -->
+    <meta property="og:title" content="Argo - The AI That Speaks For You">
+    <meta property="og:description" content="Revolutionary voice AI that negotiates, schedules, and handles calls on your behalf. Join the waitlist now.">
+    <meta property="og:type" content="website">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --argo-blue: #0066CC;
+            --argo-dark-blue: #003D7A;
+            --argo-light-blue: #E6F2FF;
+            --argo-gold: #FFB800;
+            --argo-dark-gold: #CC9200;
+            --argo-white: #FFFFFF;
+            --argo-gray: #F5F5F5;
+            --pixel-size: 3px;
+            
+            /* Time-based dynamic colors */
+            --time-tint: rgba(0, 0, 0, 0);
+            --time-accent: var(--argo-gold);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background: linear-gradient(180deg, var(--argo-light-blue) 0%, var(--argo-white) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            cursor: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI2IiB5PSI2IiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiBmaWxsPSIjMDA2NkNDIi8+PHJlY3QgeD0iOSIgeT0iNiIgd2lkdGg9IjMiIGhlaWdodD0iMyIgZmlsbD0iIzAwNjZDQyIvPjxyZWN0IHg9IjYiIHk9IjkiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiIGZpbGw9IiMwMDY2Q0MiLz48L3N2Zz4='), auto;
+        }
+
+        /* WebGL Canvas Background */
+        #webglCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        /* Performance Mode Toggle */
+        .performance-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 8px;
+            padding: 10px;
+            z-index: 10000;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            width: 40px;
+            height: 20px;
+            background: var(--argo-light-blue);
+            border: 2px solid var(--argo-blue);
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: var(--argo-gold);
+        }
+
+        .toggle-slider {
+            width: 16px;
+            height: 16px;
+            background: var(--argo-blue);
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(20px);
+        }
+
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--argo-light-blue);
+            z-index: 9999;
+        }
+
+        .scroll-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--argo-gold) 0%, var(--argo-blue) 100%);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        /* Scroll Level Indicator */
+        .level-indicator {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .level-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid var(--argo-blue);
+            background: var(--argo-white);
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .level-dot.active {
+            background: var(--argo-gold);
+            transform: scale(1.3);
+        }
+
+        .level-dot:hover::after {
+            content: attr(data-section);
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--argo-dark-blue);
+            color: var(--argo-white);
+            padding: 4px 8px;
+            font-size: 6px;
+            white-space: nowrap;
+            border-radius: 4px;
+        }
+
+        /* Animated Sections */
+        .section {
+            min-height: 100vh;
+            padding: 80px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-content {
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Scroll-triggered Animations */
+        .scroll-element {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .scroll-element.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Pixelate Animation */
+        @keyframes pixelate {
+            0% { filter: blur(10px) brightness(0.5); }
+            50% { filter: blur(5px) brightness(0.8); }
+            100% { filter: blur(0) brightness(1); }
+        }
+
+        .pixelate-in {
+            animation: pixelate 1s ease-out;
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0.8;
+        }
+
+        .glitch-text::before {
+            animation: glitch1 0.5s infinite;
+            color: var(--argo-gold);
+            z-index: -1;
+        }
+
+        .glitch-text::after {
+            animation: glitch2 0.5s infinite;
+            color: var(--argo-blue);
+            z-index: -2;
+        }
+
+        @keyframes glitch1 {
+            0%, 100% { clip-path: inset(0 0 0 0); }
+            20% { clip-path: inset(20% 0 60% 0); }
+            40% { clip-path: inset(50% 0 20% 0); }
+            60% { clip-path: inset(10% 0 80% 0); }
+            80% { clip-path: inset(80% 0 10% 0); }
+        }
+
+        @keyframes glitch2 {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        /* Hero Section Enhanced */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(32px, 8vw, 72px);
+            color: var(--argo-blue);
+            text-shadow: 
+                4px 4px 0 var(--argo-gold),
+                8px 8px 0 var(--argo-dark-blue),
+                8px 8px 20px rgba(0, 102, 204, 0.3);
+            margin-bottom: 30px;
+            animation: heroFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Time-based Messages */
+        .time-message {
+            background: var(--argo-white);
+            border: 3px solid var(--time-accent);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin: 20px auto;
+            max-width: 600px;
+            position: relative;
+            animation: messageSlide 0.8s ease-out;
+        }
+
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .time-message::after {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid var(--time-accent);
+        }
+
+        /* Community Gallery */
+        .gallery-section {
+            background: var(--argo-white);
+            padding: 60px 20px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gallery-title {
+            font-size: 24px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 15px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .doodle-card {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 8px;
+            padding: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            animation: doodleFadeIn 0.5s ease-out;
+        }
+
+        @keyframes doodleFadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .doodle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 5px 0 var(--argo-dark-blue),
+                0 10px 20px rgba(0, 102, 204, 0.2);
+        }
+
+        .doodle-card.featured {
+            border-color: var(--argo-gold);
+            box-shadow: 0 0 20px rgba(255, 184, 0, 0.3);
+        }
+
+        .doodle-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: var(--argo-light-blue);
+            border-radius: 4px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8px;
+            color: var(--argo-blue);
+            image-rendering: pixelated;
+        }
+
+        .doodle-reactions {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 10px;
+            border-top: 2px solid var(--argo-light-blue);
+        }
+
+        .reaction-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.3);
+        }
+
+        .reaction-btn.active {
+            animation: reactionPulse 0.5s ease;
+        }
+
+        @keyframes reactionPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.5); }
+        }
+
+        .reaction-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--argo-gold);
+            color: var(--argo-white);
+            font-size: 8px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        /* Drawing Canvas Enhanced */
+        .canvas-container {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 
+                0 0 0 3px var(--argo-dark-blue),
+                0 8px 0 var(--argo-dark-blue);
+        }
+
+        #enhancedCanvas {
+            width: 100%;
+            height: 400px;
+            background: var(--argo-white);
+            border: 2px solid var(--argo-light-blue);
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        /* Enhanced Color Palette */
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--argo-dark-blue);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .color-swatch.active {
+            box-shadow: 0 0 0 3px var(--argo-gold);
+            transform: scale(1.2);
+        }
+
+        .color-swatch.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Brush Size Controls */
+        .brush-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .brush-size-btn {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--argo-blue);
+            border-radius: 50%;
+            background: var(--argo-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .brush-size-btn:hover {
+            background: var(--argo-light-blue);
+        }
+
+        .brush-size-btn.active {
+            background: var(--argo-blue);
+        }
+
+        .brush-size-btn span {
+            width: 4px;
+            height: 4px;
+            background: var(--argo-dark-blue);
+            border-radius: 50%;
+        }
+
+        .brush-size-btn.medium span {
+            width: 8px;
+            height: 8px;
+        }
+
+        .brush-size-btn.large span {
+            width: 12px;
+            height: 12px;
+        }
+
+        .brush-size-btn.active span {
+            background: var(--argo-white);
+        }
+
+        /* Drawing Tools */
+        .drawing-tools {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+        }
+
+        .tool-btn {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 10px;
+            color: var(--argo-dark-blue);
+            cursor: pointer;
+            transition: all 0.1s ease;
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .tool-btn:hover {
+            background: var(--argo-blue);
+            color: var(--argo-white);
+            transform: translateY(-2px);
+        }
+
+        .tool-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Parallax Layers */
+        .parallax-layer {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            top: -5%;
+            left: -5%;
+        }
+
+        .parallax-layer.back {
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .parallax-layer.mid {
+            z-index: 2;
+            opacity: 0.5;
+        }
+
+        .parallax-layer.front {
+            z-index: 3;
+            opacity: 0.7;
+        }
+
+        /* Stats Dashboard Enhanced */
+        .stats-dashboard {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 3px solid var(--argo-blue);
+            border-radius: 8px;
+            padding: 15px;
+            z-index: 1000;
+            min-width: 200px;
+        }
+
+        .stats-title {
+            font-size: 10px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-size: 8px;
+        }
+
+        .stat-label {
+            color: var(--argo-dark-blue);
+        }
+
+        .stat-value {
+            color: var(--argo-gold);
+            font-weight: bold;
+        }
+
+        /* Achievement Badge */
+        .achievement-badge {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--argo-white);
+            border: 4px solid var(--argo-gold);
+            border-radius: 12px;
+            padding: 20px;
+            z-index: 10002;
+            text-align: center;
+            animation: achievementPop 0.5s ease-out forwards;
+        }
+
+        @keyframes achievementPop {
+            to {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .achievement-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .achievement-title {
+            font-size: 12px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 8px;
+            color: var(--argo-blue);
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, 
+                var(--argo-light-blue) 25%, 
+                var(--argo-gray) 50%, 
+                var(--argo-light-blue) 75%);
+            background-size: 200% 100%;
+            animation: skeleton-loading 1.5s infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Night Mode Styles */
+        body.night-mode {
+            background: linear-gradient(180deg, #001a33 0%, #002244 100%);
+        }
+
+        body.night-mode .section {
+            background: rgba(0, 26, 51, 0.5);
+        }
+
+        body.night-mode .time-message {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--argo-gold);
+            color: var(--argo-white);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .level-indicator {
+                display: none;
+            }
+
+            .stats-dashboard {
+                top: auto;
+                bottom: 80px;
+                right: 10px;
+                left: 10px;
+                min-width: auto;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .performance-toggle {
+                bottom: 10px;
+                right: 10px;
+                font-size: 6px;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .performance-toggle,
+            .stats-dashboard,
+            .level-indicator,
+            #webglCanvas {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WebGL Canvas for CRT Effect -->
+    <canvas id="webglCanvas"></canvas>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress">
+        <div class="scroll-progress-bar" id="scrollProgress"></div>
+    </div>
+
+    <!-- Level Indicator -->
+    <div class="level-indicator">
+        <div class="level-dot active" data-section="Hero"></div>
+        <div class="level-dot" data-section="Problem"></div>
+        <div class="level-dot" data-section="Solution"></div>
+        <div class="level-dot" data-section="Gallery"></div>
+        <div class="level-dot" data-section="Canvas"></div>
+    </div>
+
+    <!-- Performance Mode Toggle -->
+    <div class="performance-toggle">
+        <span>FX:</span>
+        <div class="toggle-switch" id="performanceToggle">
+            <div class="toggle-slider"></div>
+        </div>
+    </div>
+
+    <!-- Stats Dashboard -->
+    <div class="stats-dashboard">
+        <div class="stats-title">LIVE STATS</div>
+        <div class="stat-row">
+            <span class="stat-label">Visitors:</span>
+            <span class="stat-value" id="visitorCount">12,847</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Doodles:</span>
+            <span class="stat-value" id="doodleCount">3,421</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Time:</span>
+            <span class="stat-value" id="timeSpent">0:00</span>
+        </div>
+        <div class="stat-row">
+            <span class="stat-label">Level:</span>
+            <span class="stat-value" id="currentLevel">1/5</span>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="section hero-section">
+        <div class="section-content">
+            <h1 class="hero-title glitch-text" data-text="ARGO">ARGO</h1>
+            <div class="time-message" id="timeMessage">
+                <p id="dynamicMessage">Welcome! Loading personalized message...</p>
+            </div>
+            <div class="scroll-element">
+                <p style="text-align: center; font-size: 12px; color: var(--argo-dark-blue); margin-top: 30px;">
+                    Your AI Voice Clone That Negotiates For You
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="section">
+        <div class="section-content">
+            <div class="scroll-element">
+                <h2 style="font-size: 24px; color: var(--argo-dark-blue); text-align: center; margin-bottom: 40px;">
+                    The Phone Call Problem
+                </h2>
+            </div>
+            <div class="scroll-element" style="animation-delay: 0.2s;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div class="pixelate-in" style="background: white; border: 3px solid #FF4444; border-radius: 8px; padding: 20px;">
+                        <h3 style="font-size: 10px; color: #FF4444; margin-bottom: 10px;">43 HOURS/YEAR</h3>
+                        <p style="font-size: 8px; line-height: 1.5;">Average time wasted on hold</p>
+                    </div>
+                    <div class="pixelate-in" style="background: white; border: 3px solid #FF4444; border-radius: 8px; padding: 20px; animation-delay: 0.1s;">
+                        <h3 style="font-size: 10px; color: #FF4444; margin-bottom: 10px;">$2,400 LOST</h3>
+                        <p style="font-size: 8px; line-height: 1.5;">In missed negotiation savings</p>
+                    </div>
+                    <div class="pixelate-in" style="background: white; border: 3px solid #FF4444; border-radius: 8px; padding: 20px; animation-delay: 0.2s;">
+                        <h3 style="font-size: 10px; color: #FF4444; margin-bottom: 10px;">87% STRESS</h3>
+                        <p style="font-size: 8px; line-height: 1.5;">From dealing with companies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="section">
+        <div class="section-content">
+            <div class="scroll-element">
+                <h2 style="font-size: 24px; color: var(--argo-gold); text-align: center; margin-bottom: 40px;">
+                    Enter Argo: Your Voice, Automated
+                </h2>
+            </div>
+            <div class="scroll-element" style="animation-delay: 0.3s;">
+                <div style="text-align: center;">
+                    <div class="glitch-text" data-text="VOICE CLONING" style="font-size: 16px; color: var(--argo-blue); margin: 20px;">
+                        VOICE CLONING
+                    </div>
+                    <div class="glitch-text" data-text="BILL NEGOTIATION" style="font-size: 16px; color: var(--argo-blue); margin: 20px;">
+                        BILL NEGOTIATION
+                    </div>
+                    <div class="glitch-text" data-text="24/7 AVAILABILITY" style="font-size: 16px; color: var(--argo-blue); margin: 20px;">
+                        24/7 AVAILABILITY
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Gallery Section -->
+    <section class="section gallery-section">
+        <div class="section-content">
+            <div class="gallery-header">
+                <h2 class="gallery-title">Community Creations</h2>
+                <p style="font-size: 10px; color: var(--argo-blue);">
+                    Draw, share, and vote for your favorites!
+                </p>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Dynamically loaded doodles will appear here -->
+            </div>
+            <div style="text-align: center;">
+                <button class="tool-btn" onclick="loadMoreDoodles()">LOAD MORE</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Drawing Canvas Section -->
+    <section class="section">
+        <div class="section-content">
+            <div class="canvas-container">
+                <h3 style="font-size: 14px; color: var(--argo-dark-blue); text-align: center; margin-bottom: 20px;">
+                    Create Your Doodle
+                </h3>
+                <canvas id="enhancedCanvas"></canvas>
+                <div class="color-palette">
+                    <div class="color-swatch active" data-color="#000000" style="background: #000000;"></div>
+                    <div class="color-swatch" data-color="#0066CC" style="background: #0066CC;"></div>
+                    <div class="color-swatch" data-color="#FFB800" style="background: #FFB800;"></div>
+                    <div class="color-swatch" data-color="#FF4444" style="background: #FF4444;"></div>
+                    <div class="color-swatch" data-color="#44FF44" style="background: #44FF44;"></div>
+                    <div class="color-swatch" data-color="#FF44FF" style="background: #FF44FF;"></div>
+                    <div class="color-swatch" data-color="#44FFFF" style="background: #44FFFF;"></div>
+                    <div class="color-swatch" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
+                </div>
+                <div class="brush-controls">
+                    <div class="brush-size-btn small active" data-size="3">
+                        <span></span>
+                    </div>
+                    <div class="brush-size-btn medium" data-size="6">
+                        <span></span>
+                    </div>
+                    <div class="brush-size-btn large" data-size="12">
+                        <span></span>
+                    </div>
+                </div>
+                <div class="drawing-tools">
+                    <button class="tool-btn" id="clearBtn">CLEAR</button>
+                    <button class="tool-btn" id="eraserBtn">ERASER</button>
+                    <button class="tool-btn" id="saveBtn">SAVE</button>
+                    <button class="tool-btn" id="shareBtn">SHARE</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section">
+        <div class="section-content">
+            <div style="text-align: center;">
+                <h2 style="font-size: 28px; color: var(--argo-dark-blue); margin-bottom: 30px;">
+                    Join 25,000+ Early Adopters
+                </h2>
+                <a href="#waitlist" class="tool-btn" style="font-size: 16px; padding: 20px 40px; background: linear-gradient(180deg, var(--argo-gold) 0%, var(--argo-dark-gold) 100%); color: white; border-width: 4px;">
+                    GET EARLY ACCESS
+                </a>
+                <p style="margin-top: 20px; font-size: 10px; color: var(--argo-blue);">
+                    🔥 Limited spots • Launching Q2 2025
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Badge (Hidden by default) -->
+    <div class="achievement-badge" id="achievementBadge" style="display: none;">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-title">Achievement Unlocked!</div>
+        <div class="achievement-desc" id="achievementDesc">Master Artist</div>
+    </div>
+
+    <script>
+        // Global Configuration
+        const CONFIG = {
+            webglEnabled: true,
+            performanceMode: 'high',
+            animationsEnabled: true,
+            particlesEnabled: true,
+            audioEnabled: true,
+            apiBaseUrl: '/api', // Update with actual API endpoint
+            wsUrl: 'wss://your-server.com/ws' // Update with actual WebSocket endpoint
+        };
+
+        // Device Performance Detection
+        const devicePerformance = {
+            cores: navigator.hardwareConcurrency || 4,
+            memory: navigator.deviceMemory || 4,
+            connection: navigator.connection?.effectiveType || '4g',
+            
+            isHighEnd() {
+                return this.cores >= 4 && this.memory >= 4;
+            },
+            
+            isMidRange() {
+                return this.cores >= 2 && this.memory >= 2;
+            },
+            
+            isLowEnd() {
+                return this.cores < 2 || this.memory < 2;
+            }
+        };
+
+        // WebGL CRT Shader System
+        class CRTShaderEffect {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.gl = null;
+                this.program = null;
+                this.uniforms = {};
+                this.startTime = Date.now();
+                this.mousePos = { x: 0.5, y: 0.5 };
+                this.intensity = 0.5;
+                this.enabled = devicePerformance.isHighEnd();
+                
+                if (this.enabled) {
+                    this.init();
+                }
+            }
+
+            init() {
+                try {
+                    this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
+                    if (!this.gl) {
+                        console.warn('WebGL not supported');
+                        this.enabled = false;
+                        return;
+                    }
+
+                    this.createShaders();
+                    this.setupGeometry();
+                    this.resize();
+                    this.render();
+
+                    // Event listeners
+                    window.addEventListener('resize', () => this.resize());
+                    window.addEventListener('mousemove', (e) => this.updateMouse(e));
+                } catch (error) {
+                    console.error('WebGL initialization failed:', error);
+                    this.enabled = false;
+                }
+            }
+
+            createShaders() {
+                const vertexShaderSource = `
+                    attribute vec2 a_position;
+                    attribute vec2 a_texCoord;
+                    varying vec2 v_texCoord;
+                    
+                    void main() {
+                        gl_Position = vec4(a_position, 0.0, 1.0);
+                        v_texCoord = a_texCoord;
+                    }
+                `;
+
+                const fragmentShaderSource = `
+                    precision mediump float;
+                    
+                    varying vec2 v_texCoord;
+                    uniform float u_time;
+                    uniform vec2 u_resolution;
+                    uniform vec2 u_mouse;
+                    uniform float u_intensity;
+                    
+                    // CRT curvature
+                    vec2 curve(vec2 uv) {
+                        uv = (uv - 0.5) * 2.0;
+                        uv *= 1.1;
+                        uv.x *= 1.0 + pow((abs(uv.y) / 5.0), 2.0);
+                        uv.y *= 1.0 + pow((abs(uv.x) / 4.0), 2.0);
+                        uv = (uv / 2.0) + 0.5;
+                        uv = uv * 0.92 + 0.04;
+                        return uv;
+                    }
+                    
+                    // Scanlines
+                    float scanline(vec2 uv) {
+                        return sin(uv.y * u_resolution.y * 2.0) * 0.04 * u_intensity;
+                    }
+                    
+                    // Vignette
+                    float vignette(vec2 uv) {
+                        float dist = distance(uv, vec2(0.5, 0.5));
+                        return 1.0 - smoothstep(0.0, 0.7, dist) * 0.5;
+                    }
+                    
+                    // Noise
+                    float random(vec2 st) {
+                        return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+                    }
+                    
+                    void main() {
+                        vec2 uv = curve(v_texCoord);
+                        
+                        // Out of bounds check
+                        if (uv.x < 0.0 || uv.x > 1.0 || uv.y < 0.0 || uv.y > 1.0) {
+                            gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+                            return;
+                        }
+                        
+                        // Base color (can be replaced with texture sampling)
+                        vec3 color = vec3(0.0, 0.4, 0.8) * 0.1;
+                        
+                        // Add scanlines
+                        color += scanline(uv);
+                        
+                        // Add vignette
+                        color *= vignette(uv);
+                        
+                        // Add chromatic aberration
+                        float aberration = 0.002 * u_intensity;
+                        color.r += sin(uv.y * 100.0 + u_time) * aberration;
+                        color.b -= sin(uv.y * 100.0 + u_time) * aberration;
+                        
+                        // Add noise
+                        color += random(uv + u_time * 0.001) * 0.02 * u_intensity;
+                        
+                        // Add flicker
+                        color *= 1.0 + sin(u_time * 10.0) * 0.01 * u_intensity;
+                        
+                        // Mouse interaction
+                        float mouseDist = distance(uv, u_mouse);
+                        color += (1.0 - smoothstep(0.0, 0.3, mouseDist)) * 0.1;
+                        
+                        gl_FragColor = vec4(color, 0.8);
+                    }
+                `;
+
+                // Compile shaders
+                const vertexShader = this.compileShader(this.gl.VERTEX_SHADER, vertexShaderSource);
+                const fragmentShader = this.compileShader(this.gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+                // Create program
+                this.program = this.gl.createProgram();
+                this.gl.attachShader(this.program, vertexShader);
+                this.gl.attachShader(this.program, fragmentShader);
+                this.gl.linkProgram(this.program);
+
+                if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
+                    console.error('Unable to link program');
+                    return;
+                }
+
+                // Get uniform locations
+                this.uniforms = {
+                    time: this.gl.getUniformLocation(this.program, 'u_time'),
+                    resolution: this.gl.getUniformLocation(this.program, 'u_resolution'),
+                    mouse: this.gl.getUniformLocation(this.program, 'u_mouse'),
+                    intensity: this.gl.getUniformLocation(this.program, 'u_intensity')
+                };
+            }
+
+            compileShader(type, source) {
+                const shader = this.gl.createShader(type);
+                this.gl.shaderSource(shader, source);
+                this.gl.compileShader(shader);
+
+                if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
+                    console.error('Shader compilation error:', this.gl.getShaderInfoLog(shader));
+                    return null;
+                }
+
+                return shader;
+            }
+
+            setupGeometry() {
+                // Create buffer for quad
+                const positions = new Float32Array([
+                    -1, -1,
+                     1, -1,
+                    -1,  1,
+                     1,  1
+                ]);
+
+                const texCoords = new Float32Array([
+                    0, 1,
+                    1, 1,
+                    0, 0,
+                    1, 0
+                ]);
+
+                // Position buffer
+                const positionBuffer = this.gl.createBuffer();
+                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, positionBuffer);
+                this.gl.bufferData(this.gl.ARRAY_BUFFER, positions, this.gl.STATIC_DRAW);
+
+                const positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
+                this.gl.enableVertexAttribArray(positionLocation);
+                this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
+
+                // Texture coordinate buffer
+                const texCoordBuffer = this.gl.createBuffer();
+                this.gl.bindBuffer(this.gl.ARRAY_BUFFER, texCoordBuffer);
+                this.gl.bufferData(this.gl.ARRAY_BUFFER, texCoords, this.gl.STATIC_DRAW);
+
+                const texCoordLocation = this.gl.getAttribLocation(this.program, 'a_texCoord');
+                this.gl.enableVertexAttribArray(texCoordLocation);
+                this.gl.vertexAttribPointer(texCoordLocation, 2, this.gl.FLOAT, false, 0, 0);
+            }
+
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                if (this.gl) {
+                    this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+                }
+            }
+
+            updateMouse(event) {
+                this.mousePos.x = event.clientX / window.innerWidth;
+                this.mousePos.y = 1.0 - (event.clientY / window.innerHeight);
+            }
+
+            setIntensity(value) {
+                this.intensity = Math.max(0, Math.min(1, value));
+            }
+
+            render() {
+                if (!this.enabled || !this.gl) return;
+
+                const time = (Date.now() - this.startTime) * 0.001;
+
+                this.gl.clearColor(0, 0, 0, 0);
+                this.gl.clear(this.gl.COLOR_BUFFER_BIT);
+
+                this.gl.useProgram(this.program);
+
+                // Update uniforms
+                this.gl.uniform1f(this.uniforms.time, time);
+                this.gl.uniform2f(this.uniforms.resolution, this.canvas.width, this.canvas.height);
+                this.gl.uniform2f(this.uniforms.mouse, this.mousePos.x, this.mousePos.y);
+                this.gl.uniform1f(this.uniforms.intensity, this.intensity);
+
+                // Draw
+                this.gl.drawArrays(this.gl.TRIANGLE_STRIP, 0, 4);
+
+                requestAnimationFrame(() => this.render());
+            }
+
+            toggle(enabled) {
+                this.enabled = enabled;
+                if (!enabled) {
+                    this.gl?.clear(this.gl.COLOR_BUFFER_BIT);
+                } else if (!this.gl) {
+                    this.init();
+                }
+            }
+
+            destroy() {
+                this.enabled = false;
+                if (this.gl) {
+                    this.gl.deleteProgram(this.program);
+                    this.gl = null;
+                }
+            }
+        }
+
+        // Time-based Content System
+        class TimeBasedContent {
+            constructor() {
+                this.hour = new Date().getHours();
+                this.timeOfDay = this.getTimeOfDay();
+                this.specialDate = this.checkSpecialDate();
+                this.init();
+            }
+
+            getTimeOfDay() {
+                if (this.hour >= 0 && this.hour < 6) return 'night';
+                if (this.hour >= 6 && this.hour < 9) return 'morning';
+                if (this.hour >= 9 && this.hour < 18) return 'day';
+                if (this.hour >= 18 && this.hour < 21) return 'evening';
+                return 'latenight';
+            }
+
+            checkSpecialDate() {
+                const today = new Date();
+                const month = today.getMonth() + 1;
+                const day = today.getDate();
+
+                if (month === 12 && day === 25) return 'christmas';
+                if (month === 1 && day === 1) return 'newyear';
+                if (month === 10 && day === 31) return 'halloween';
+                return null;
+            }
+
+            getMessages() {
+                const messages = {
+                    night: [
+                        "🌙 Still coding? Argo handles calls while you sleep!",
+                        "🦉 Night owl detected! Join the midnight club!",
+                        "💤 Your 3 AM ideas are safe with Argo!"
+                    ],
+                    morning: [
+                        "☀️ Good morning! Start your day stress-free!",
+                        "☕ Coffee time! Let Argo handle the calls!",
+                        "🌅 Rise & shine with your AI assistant!"
+                    ],
+                    day: [
+                        "💼 Busy day? Argo's got your back!",
+                        "📊 Boost productivity with Argo!",
+                        "🚀 Work smarter with AI assistance!"
+                    ],
+                    evening: [
+                        "🌆 Wind down while Argo works!",
+                        "💰 Evening savings await with Argo!",
+                        "🎵 Relax, Argo handles the rest!"
+                    ],
+                    latenight: [
+                        "🎮 Gaming time? Argo's on call duty!",
+                        "📺 Netflix & let Argo handle it!",
+                        "🌃 Perfect time to join the waitlist!"
+                    ]
+                };
+
+                return messages[this.timeOfDay] || messages.day;
+            }
+
+            updateContent() {
+                const messageEl = document.getElementById('dynamicMessage');
+                const messages = this.getMessages();
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                if (messageEl) {
+                    messageEl.textContent = randomMessage;
+                }
+
+                // Update theme based on time
+                this.updateTheme();
+            }
+
+            updateTheme() {
+                const root = document.documentElement;
+                const body = document.body;
+
+                if (this.timeOfDay === 'night' || this.timeOfDay === 'latenight') {
+                    body.classList.add('night-mode');
+                    root.style.setProperty('--time-tint', 'rgba(0, 26, 51, 0.3)');
+                    root.style.setProperty('--time-accent', 'var(--argo-gold)');
+                } else if (this.timeOfDay === 'morning') {
+                    root.style.setProperty('--time-tint', 'rgba(255, 200, 100, 0.1)');
+                    root.style.setProperty('--time-accent', '#FFB800');
+                } else if (this.timeOfDay === 'evening') {
+                    root.style.setProperty('--time-tint', 'rgba(255, 100, 50, 0.1)');
+                    root.style.setProperty('--time-accent', '#FF6644');
+                }
+
+                // Special date themes
+                if (this.specialDate === 'christmas') {
+                    this.addSnowEffect();
+                } else if (this.specialDate === 'halloween') {
+                    root.style.setProperty('--time-accent', '#FF6600');
+                }
+            }
+
+            addSnowEffect() {
+                // Add snow particles for Christmas
+                const snowContainer = document.createElement('div');
+                snowContainer.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    pointer-events: none;
+                    z-index: 9997;
+                `;
+
+                for (let i = 0; i < 50; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.style.cssText = `
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: white;
+                        border-radius: 50%;
+                        top: ${Math.random() * 100}%;
+                        left: ${Math.random() * 100}%;
+                        animation: snowfall ${5 + Math.random() * 10}s linear infinite;
+                        animation-delay: ${Math.random() * 5}s;
+                    `;
+                    snowContainer.appendChild(snowflake);
+                }
+
+                document.body.appendChild(snowContainer);
+            }
+
+            init() {
+                this.updateContent();
+                // Update every minute
+                setInterval(() => this.updateContent(), 60000);
+            }
+        }
+
+        // Scroll Animation System
+        class ScrollAnimationSystem {
+            constructor() {
+                this.elements = [];
+                this.init();
+            }
+
+            init() {
+                // Setup Intersection Observer
+                const observerOptions = {
+                    threshold: [0, 0.25, 0.5, 0.75, 1],
+                    rootMargin: '0px 0px -10% 0px'
+                };
+
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            
+                            // Special animations based on data attributes
+                            if (entry.target.dataset.animation === 'pixelate') {
+                                entry.target.classList.add('pixelate-in');
+                            } else if (entry.target.dataset.animation === 'glitch') {
+                                entry.target.classList.add('glitch-text');
+                            }
+                        }
+                    });
+                }, observerOptions);
+
+                // Observe all scroll elements
+                document.querySelectorAll('.scroll-element').forEach(el => {
+                    this.observer.observe(el);
+                });
+
+                // Scroll progress
+                this.updateScrollProgress();
+                window.addEventListener('scroll', () => this.updateScrollProgress());
+            }
+
+            updateScrollProgress() {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                
+                const progressBar = document.getElementById('scrollProgress');
+                if (progressBar) {
+                    progressBar.style.width = scrollPercent + '%';
+                }
+
+                // Update level indicator
+                this.updateLevelIndicator(scrollPercent);
+            }
+
+            updateLevelIndicator(scrollPercent) {
+                const levels = document.querySelectorAll('.level-dot');
+                const currentLevel = Math.floor((scrollPercent / 100) * levels.length);
+                
+                levels.forEach((dot, index) => {
+                    if (index <= currentLevel) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+
+                // Update stats
+                const levelStat = document.getElementById('currentLevel');
+                if (levelStat) {
+                    levelStat.textContent = `${currentLevel + 1}/${levels.length}`;
+                }
+            }
+        }
+
+        // Community Gallery System
+        class CommunityGallery {
+            constructor() {
+                this.doodles = [];
+                this.page = 1;
+                this.isLoading = false;
+                this.init();
+            }
+
+            async init() {
+                await this.loadDoodles();
+                this.setupWebSocket();
+            }
+
+            async loadDoodles() {
+                if (this.isLoading) return;
+                this.isLoading = true;
+
+                try {
+                    // Simulate API call - replace with actual API
+                    const mockDoodles = this.generateMockDoodles();
+                    this.renderDoodles(mockDoodles);
+                } catch (error) {
+                    console.error('Failed to load doodles:', error);
+                } finally {
+                    this.isLoading = false;
+                }
+            }
+
+            generateMockDoodles() {
+                const mockDoodles = [];
+                for (let i = 0; i < 6; i++) {
+                    mockDoodles.push({
+                        id: `doodle_${Date.now()}_${i}`,
+                        imageData: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9iMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjRTZGMkZGIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGRvbWluYW50LWJhc2VsaW5lPSJtaWRkbGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtZmFtaWx5PSJQcmVzcyBTdGFydCAyUCIgZm9udC1zaXplPSIxMiIgZmlsbD0iIzAwNjZDQyI+RE9PRExFPC90ZXh0Pjwvc3ZnPg==',
+                        userName: `User${Math.floor(Math.random() * 9999)}`,
+                        waitlistPosition: Math.floor(Math.random() * 10000),
+                        reactions: {
+                            like: Math.floor(Math.random() * 100),
+                            love: Math.floor(Math.random() * 50),
+                            fire: Math.floor(Math.random() * 30),
+                            laugh: Math.floor(Math.random() * 20)
+                        },
+                        isFeatured: Math.random() > 0.8,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                return mockDoodles;
+            }
+
+            renderDoodles(doodles) {
+                const gallery = document.getElementById('galleryGrid');
+                if (!gallery) return;
+
+                doodles.forEach((doodle, index) => {
+                    const card = document.createElement('div');
+                    card.className = `doodle-card ${doodle.isFeatured ? 'featured' : ''}`;
+                    card.style.animationDelay = `${index * 0.1}s`;
+                    
+                    card.innerHTML = `
+                        <div class="doodle-image">
+                            <img src="${doodle.imageData}" alt="Doodle by ${doodle.userName}" style="width: 100%; height: 100%;">
+                        </div>
+                        <div class="doodle-reactions">
+                            <button class="reaction-btn" data-reaction="like" data-id="${doodle.id}">
+                                ❤️
+                                ${doodle.reactions.like > 0 ? `<span class="reaction-count">${doodle.reactions.like}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="love" data-id="${doodle.id}">
+                                😍
+                                ${doodle.reactions.love > 0 ? `<span class="reaction-count">${doodle.reactions.love}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="fire" data-id="${doodle.id}">
+                                🔥
+                                ${doodle.reactions.fire > 0 ? `<span class="reaction-count">${doodle.reactions.fire}</span>` : ''}
+                            </button>
+                            <button class="reaction-btn" data-reaction="laugh" data-id="${doodle.id}">
+                                😂
+                                ${doodle.reactions.laugh > 0 ? `<span class="reaction-count">${doodle.reactions.laugh}</span>` : ''}
+                            </button>
+                        </div>
+                    `;
+
+                    // Add reaction listeners
+                    card.querySelectorAll('.reaction-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => this.handleReaction(e));
+                    });
+
+                    gallery.appendChild(card);
+                });
+
+                // Update doodle count
+                const doodleCount = document.getElementById('doodleCount');
+                if (doodleCount) {
+                    const currentCount = parseInt(doodleCount.textContent);
+                    doodleCount.textContent = currentCount + doodles.length;
+                }
+            }
+
+            handleReaction(event) {
+                const btn = event.currentTarget;
+                const reaction = btn.dataset.reaction;
+                const doodleId = btn.dataset.id;
+
+                // Animate button
+                btn.classList.add('active');
+                setTimeout(() => btn.classList.remove('active'), 500);
+
+                // Update count (in real app, this would be an API call)
+                const countEl = btn.querySelector('.reaction-count');
+                if (countEl) {
+                    const currentCount = parseInt(countEl.textContent);
+                    countEl.textContent = currentCount + 1;
+                } else {
+                    btn.innerHTML += '<span class="reaction-count">1</span>';
+                }
+
+                // Send to server (mock)
+                this.sendReaction(doodleId, reaction);
+            }
+
+            async sendReaction(doodleId, reaction) {
+                // In production, this would be an API call
+                console.log(`Reaction ${reaction} added to doodle ${doodleId}`);
+            }
+
+            setupWebSocket() {
+                // In production, connect to real WebSocket server
+                // Mock WebSocket updates
+                setInterval(() => {
+                    if (Math.random() > 0.7) {
+                        const newDoodle = this.generateMockDoodles()[0];
+                        this.renderDoodles([newDoodle]);
+                    }
+                }, 10000);
+            }
+        }
+
+        // Enhanced Drawing Canvas
+        class EnhancedCanvas {
+            constructor() {
+                this.canvas = document.getElementById('enhancedCanvas');
+                if (!this.canvas) return;
+                
+                this.ctx = this.canvas.getContext('2d');
+                this.isDrawing = false;
+                this.currentColor = '#000000';
+                this.brushSize = 3;
+                this.isEraser = false;
+                this.history = [];
+                this.historyIndex = -1;
+                
+                this.init();
+            }
+
+            init() {
+                // Set canvas size
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+
+                // Clear canvas with white background
+                this.clear();
+
+                // Drawing events
+                this.canvas.addEventListener('mousedown', (e) => this.startDrawing(e));
+                this.canvas.addEventListener('mousemove', (e) => this.draw(e));
+                this.canvas.addEventListener('mouseup', () => this.stopDrawing());
+                this.canvas.addEventListener('mouseleave', () => this.stopDrawing());
+
+                // Touch events
+                this.canvas.addEventListener('touchstart', (e) => this.handleTouch(e));
+                this.canvas.addEventListener('touchmove', (e) => this.handleTouch(e));
+                this.canvas.addEventListener('touchend', () => this.stopDrawing());
+
+                // Color palette
+                document.querySelectorAll('.color-swatch').forEach(swatch => {
+                    swatch.addEventListener('click', () => {
+                        document.querySelector('.color-swatch.active')?.classList.remove('active');
+                        swatch.classList.add('active');
+                        this.currentColor = swatch.dataset.color;
+                        this.isEraser = false;
+                    });
+                });
+
+                // Brush size
+                document.querySelectorAll('.brush-size-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        document.querySelector('.brush-size-btn.active')?.classList.remove('active');
+                        btn.classList.add('active');
+                        this.brushSize = parseInt(btn.dataset.size);
+                    });
+                });
+
+                // Tools
+                document.getElementById('clearBtn')?.addEventListener('click', () => this.clear());
+                document.getElementById('eraserBtn')?.addEventListener('click', () => this.toggleEraser());
+                document.getElementById('saveBtn')?.addEventListener('click', () => this.save());
+                document.getElementById('shareBtn')?.addEventListener('click', () => this.share());
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        if (e.key === 'z') {
+                            e.preventDefault();
+                            this.undo();
+                        } else if (e.key === 'y') {
+                            e.preventDefault();
+                            this.redo();
+                        }
+                    }
+                });
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            startDrawing(e) {
+                this.isDrawing = true;
+                this.saveState();
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y);
+            }
+
+            draw(e) {
+                if (!this.isDrawing) return;
+                
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.ctx.lineWidth = this.brushSize;
+                this.ctx.lineCap = 'square';
+                this.ctx.lineJoin = 'miter';
+                
+                if (this.isEraser) {
+                    this.ctx.globalCompositeOperation = 'destination-out';
+                } else {
+                    this.ctx.globalCompositeOperation = 'source-over';
+                    this.ctx.strokeStyle = this.currentColor;
+                }
+                
+                this.ctx.lineTo(x, y);
+                this.ctx.stroke();
+            }
+
+            stopDrawing() {
+                this.isDrawing = false;
+            }
+
+            handleTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(
+                    e.type === 'touchstart' ? 'mousedown' : 
+                    e.type === 'touchmove' ? 'mousemove' : 'mouseup', 
+                    {
+                        clientX: touch?.clientX || 0,
+                        clientY: touch?.clientY || 0
+                    }
+                );
+                this.canvas.dispatchEvent(mouseEvent);
+            }
+
+            clear() {
+                this.ctx.fillStyle = '#FFFFFF';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.saveState();
+            }
+
+            toggleEraser() {
+                this.isEraser = !this.isEraser;
+                const eraserBtn = document.getElementById('eraserBtn');
+                if (eraserBtn) {
+                    eraserBtn.style.background = this.isEraser ? 'var(--argo-blue)' : 'var(--argo-white)';
+                    eraserBtn.style.color = this.isEraser ? 'var(--argo-white)' : 'var(--argo-dark-blue)';
+                }
+            }
+
+            saveState() {
+                this.historyIndex++;
+                if (this.historyIndex < this.history.length) {
+                    this.history.length = this.historyIndex;
+                }
+                this.history.push(this.canvas.toDataURL());
+            }
+
+            undo() {
+                if (this.historyIndex > 0) {
+                    this.historyIndex--;
+                    this.restoreState();
+                }
+            }
+
+            redo() {
+                if (this.historyIndex < this.history.length - 1) {
+                    this.historyIndex++;
+                    this.restoreState();
+                }
+            }
+
+            restoreState() {
+                const img = new Image();
+                img.src = this.history[this.historyIndex];
+                img.onload = () => {
+                    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                    this.ctx.drawImage(img, 0, 0);
+                };
+            }
+
+            save() {
+                const link = document.createElement('a');
+                link.download = `argo-doodle-${Date.now()}.png`;
+                link.href = this.canvas.toDataURL();
+                link.click();
+                
+                // Show achievement
+                this.showAchievement('Artist', 'Saved your masterpiece!');
+            }
+
+            async share() {
+                try {
+                    // Convert canvas to blob
+                    const blob = await new Promise(resolve => {
+                        this.canvas.toBlob(resolve, 'image/png');
+                    });
+
+                    // In production, upload to server
+                    // For now, just show achievement
+                    this.showAchievement('Community Artist', 'Shared with the community!');
+                    
+                    // Add to gallery (mock)
+                    const mockDoodle = {
+                        id: `user_${Date.now()}`,
+                        imageData: this.canvas.toDataURL(),
+                        userName: 'You',
+                        reactions: { like: 0, love: 0, fire: 0, laugh: 0 },
+                        isFeatured: false
+                    };
+                    
+                    // Prepend to gallery
+                    const gallery = document.getElementById('galleryGrid');
+                    if (gallery && gallery.firstChild) {
+                        const card = this.createDoodleCard(mockDoodle);
+                        gallery.insertBefore(card, gallery.firstChild);
+                    }
+                } catch (error) {
+                    console.error('Failed to share doodle:', error);
+                }
+            }
+
+            createDoodleCard(doodle) {
+                const card = document.createElement('div');
+                card.className = 'doodle-card';
+                card.innerHTML = `
+                    <div class="doodle-image">
+                        <img src="${doodle.imageData}" alt="Your doodle" style="width: 100%; height: 100%;">
+                    </div>
+                    <div class="doodle-reactions">
+                        <button class="reaction-btn">❤️</button>
+                        <button class="reaction-btn">😍</button>
+                        <button class="reaction-btn">🔥</button>
+                        <button class="reaction-btn">😂</button>
+                    </div>
+                `;
+                return card;
+            }
+
+            showAchievement(title, desc) {
+                const badge = document.getElementById('achievementBadge');
+                const titleEl = badge.querySelector('.achievement-title');
+                const descEl = document.getElementById('achievementDesc');
+                
+                titleEl.textContent = title;
+                descEl.textContent = desc;
+                
+                badge.style.display = 'block';
+                setTimeout(() => {
+                    badge.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // Statistics Tracker
+        class StatsTracker {
+            constructor() {
+                this.startTime = Date.now();
+                this.visitorCount = 12847;
+                this.init();
+            }
+
+            init() {
+                this.updateStats();
+                setInterval(() => this.updateStats(), 1000);
+                
+                // Simulate visitor count increases
+                setInterval(() => {
+                    this.visitorCount += Math.floor(Math.random() * 3);
+                    document.getElementById('visitorCount').textContent = this.visitorCount.toLocaleString();
+                }, 5000);
+            }
+
+            updateStats() {
+                const elapsed = Math.floor((Date.now() - this.startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                
+                const timeSpent = document.getElementById('timeSpent');
+                if (timeSpent) {
+                    timeSpent.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }
+        }
+
+        // Performance Toggle
+        function setupPerformanceToggle() {
+            const toggle = document.getElementById('performanceToggle');
+            if (!toggle) return;
+
+            toggle.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const isHighPerf = this.classList.contains('active');
+                
+                // Toggle WebGL effects
+                if (window.crtEffect) {
+                    window.crtEffect.setIntensity(isHighPerf ? 0.5 : 0.2);
+                    window.crtEffect.toggle(isHighPerf);
+                }
+                
+                // Toggle animations
+                document.body.style.setProperty('--animation-duration', isHighPerf ? '1s' : '0.1s');
+                
+                // Save preference
+                localStorage.setItem('performanceMode', isHighPerf ? 'high' : 'low');
+            });
+
+            // Load saved preference
+            const savedMode = localStorage.getItem('performanceMode');
+            if (savedMode === 'low') {
+                toggle.classList.remove('active');
+                toggle.dispatchEvent(new Event('click'));
+            }
+        }
+
+        // Load More Doodles
+        window.loadMoreDoodles = function() {
+            if (window.gallery) {
+                window.gallery.loadDoodles();
+            }
+        };
+
+        // Initialize everything
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize WebGL effects
+            const webglCanvas = document.getElementById('webglCanvas');
+            if (webglCanvas) {
+                window.crtEffect = new CRTShaderEffect(webglCanvas);
+            }
+
+            // Initialize time-based content
+            new TimeBasedContent();
+
+            // Initialize scroll animations
+            new ScrollAnimationSystem();
+
+            // Initialize community gallery
+            window.gallery = new CommunityGallery();
+
+            // Initialize enhanced canvas
+            new EnhancedCanvas();
+
+            // Initialize stats tracker
+            new StatsTracker();
+
+            // Setup performance toggle
+            setupPerformanceToggle();
+
+            // Level navigation
+            document.querySelectorAll('.level-dot').forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    const sections = document.querySelectorAll('.section');
+                    if (sections[index]) {
+                        sections[index].scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Add CSS for snow animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes snowfall {
+                    from {
+                        transform: translateY(-100vh);
+                    }
+                    to {
+                        transform: translateY(100vh);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+
+            console.log('%c🚀 ARGO PHASE 3 INITIALIZED', 
+                'background: linear-gradient(90deg, #0066CC, #FFB800); color: white; font-size: 24px; font-weight: bold; padding: 10px;');
+            console.log('%c✨ Award-winning experience loaded!', 'color: #FFB800; font-size: 14px;');
+        });
+    </script>
+</body>
+</html>
