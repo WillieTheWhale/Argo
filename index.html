@@ -425,26 +425,197 @@
             font-family: 'Press Start 2P', monospace;
         }
 
-        /* Drawing Canvas Enhanced */
+        /* Drawing Canvas Enhanced with Pictochat Styling */
         .canvas-container {
             background: var(--argo-white);
-            border: 3px solid var(--argo-blue);
-            border-radius: 12px;
+            border: 4px solid var(--argo-dark-blue);
+            border-radius: 0;
             padding: 20px;
             margin: 40px auto;
             max-width: 800px;
             box-shadow: 
-                0 0 0 3px var(--argo-dark-blue),
+                0 0 0 2px var(--argo-blue),
                 0 8px 0 var(--argo-dark-blue);
+            position: relative;
         }
 
         #enhancedCanvas {
             width: 100%;
             height: 400px;
             background: var(--argo-white);
-            border: 2px solid var(--argo-light-blue);
+            border: 3px solid var(--argo-dark-blue);
             cursor: crosshair;
             touch-action: none;
+            image-rendering: pixelated;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: crisp-edges;
+        }
+        
+        /* Pictochat Drawing Tools Panel */
+        .drawing-tools-panel {
+            display: flex;
+            gap: 20px;
+            padding: 15px;
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            margin-top: 15px;
+            font-family: 'Press Start 2P', monospace;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        
+        .palette-label {
+            font-size: 10px;
+            color: var(--argo-dark-blue);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        /* Enhanced Color Grid - Pictochat Style */
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+        
+        .color-swatch {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #999999;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            padding: 0;
+            position: relative;
+            box-shadow: inset 0 0 0 2px rgba(255,255,255,0.3);
+        }
+        
+        .color-swatch:hover {
+            border-color: var(--argo-blue);
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .color-swatch.active {
+            border-color: var(--argo-gold);
+            border-width: 4px;
+            transform: scale(1.2);
+            box-shadow: 
+                0 0 0 2px var(--argo-white),
+                0 0 0 4px var(--argo-gold),
+                0 0 12px rgba(255, 184, 0, 0.5);
+            z-index: 20;
+        }
+        
+        .color-swatch.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        
+        /* Brush Size Selector - DS Style */
+        .brush-size-selector {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .size-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .size-btn {
+            width: 48px;
+            height: 48px;
+            background: var(--argo-gray);
+            border: 3px solid var(--argo-blue);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        
+        .size-btn:hover {
+            background: var(--argo-light-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 3px 0 var(--argo-dark-blue);
+        }
+        
+        .size-btn.active {
+            background: var(--argo-blue);
+            border-color: var(--argo-gold);
+            transform: translateY(-1px);
+            box-shadow: 0 1px 0 var(--argo-dark-blue);
+        }
+        
+        .size-dot {
+            background: #333333;
+            border-radius: 0;
+        }
+        
+        .size-btn.active .size-dot {
+            background: var(--argo-white);
+        }
+        
+        .size-dot.small {
+            width: 4px;
+            height: 4px;
+        }
+        
+        .size-dot.medium {
+            width: 8px;
+            height: 8px;
+        }
+        
+        .size-dot.large {
+            width: 14px;
+            height: 14px;
+        }
+        
+        /* Tool Action Buttons - DS Style */
+        .tool-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .tool-btn {
+            padding: 10px 15px;
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            color: var(--argo-dark-blue);
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s ease;
+            position: relative;
+        }
+        
+        .tool-btn:hover {
+            background: var(--argo-blue);
+            color: var(--argo-white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 0 var(--argo-dark-blue);
+        }
+        
+        .tool-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 0 var(--argo-dark-blue);
+        }
+        
+        .tool-btn.active-tool {
+            background: var(--argo-gold);
+            color: var(--argo-dark-blue);
+            border-color: var(--argo-dark-blue);
         }
         
         /* ============================================
@@ -959,6 +1130,259 @@
                 right: 10px;
                 font-size: 6px;
             }
+            
+            .drawing-tools-panel {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .size-buttons {
+                justify-content: center;
+            }
+            
+            .tool-actions {
+                justify-content: center;
+                width: 100%;
+            }
+        }
+        
+        /* ============================================
+           MESSAGE DISPLAY AREA - PICTOCHAT STYLE
+           ============================================ */
+        .message-display-area {
+            background: var(--argo-white);
+            border: 3px solid var(--argo-blue);
+            min-height: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            margin-top: 20px;
+            position: relative;
+        }
+        
+        .message-bubble {
+            background: var(--argo-gray);
+            border: 2px solid var(--argo-dark-blue);
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .message-bubble.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 8px;
+            color: var(--argo-blue);
+        }
+        
+        .message-content {
+            background: var(--argo-white);
+            border: 1px solid var(--argo-light-blue);
+            padding: 5px;
+        }
+        
+        .doodle-image {
+            image-rendering: pixelated;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Flying Message Animation */
+        .flying-message {
+            will-change: transform, left, top, opacity;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border: 3px solid var(--argo-blue);
+            background: var(--argo-white);
+            z-index: 9999;
+        }
+        
+        .flying-message img {
+            display: block;
+            width: 100%;
+            height: auto;
+            image-rendering: pixelated;
+        }
+        
+        /* Trail effect particles */
+        .trail-particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--argo-gold);
+            pointer-events: none;
+            z-index: 9998;
+            animation: trailFade 0.5s ease-out forwards;
+        }
+        
+        @keyframes trailFade {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+        
+        /* ============================================
+           DS BOOT SEQUENCE STYLES
+           ============================================ */
+        .ds-boot-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            color: #FFFFFF;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Press Start 2P', monospace;
+            overflow: hidden;
+        }
+        
+        .boot-stage {
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Warning Stage */
+        .warning-title {
+            font-size: 14px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            color: #FFFFFF;
+        }
+        
+        .warning-body {
+            font-size: 8px;
+            line-height: 1.8;
+            opacity: 0.8;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Logo Stage */
+        .boot-logo {
+            animation: logoAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes logoAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-10deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .logo-text {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 0 var(--argo-blue);
+            letter-spacing: 4px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #E0E0E0 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+        
+        .logo-subtitle {
+            font-size: 10px;
+            color: #CCCCCC;
+            letter-spacing: 2px;
+        }
+        
+        /* Loading Stage */
+        .boot-loading {
+            min-width: 400px;
+        }
+        
+        .loading-bar-container {
+            width: 100%;
+            height: 24px;
+            border: 3px solid #FFFFFF;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+            background: #111111;
+        }
+        
+        .loading-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--argo-blue) 0%, var(--argo-gold) 100%);
+            animation: loadProgress 1.5s ease-out forwards;
+        }
+        
+        @keyframes loadProgress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+        
+        .loading-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+        
+        /* Skip Button */
+        .boot-skip-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: transparent;
+            border: 2px solid #FFFFFF;
+            color: #FFFFFF;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 8px;
+            padding: 10px 15px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .boot-skip-btn:hover {
+            opacity: 1;
+            background: #FFFFFF;
+            color: #000000;
+            transform: scale(1.05);
+        }
+        
+        /* Fade out animation */
+        .ds-boot-screen.fade-out {
+            animation: bootFadeOut 0.8s ease-out forwards;
+        }
+        
+        @keyframes bootFadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
         }
 
         /* Accessibility */
@@ -1271,33 +1695,81 @@
                     Create Your Doodle
                 </h3>
                 <canvas id="enhancedCanvas"></canvas>
-                <div class="color-palette">
-                    <div class="color-swatch active" data-color="#000000" style="background: #000000;"></div>
-                    <div class="color-swatch" data-color="#0066CC" style="background: #0066CC;"></div>
-                    <div class="color-swatch" data-color="#FFB800" style="background: #FFB800;"></div>
-                    <div class="color-swatch" data-color="#FF4444" style="background: #FF4444;"></div>
-                    <div class="color-swatch" data-color="#44FF44" style="background: #44FF44;"></div>
-                    <div class="color-swatch" data-color="#FF44FF" style="background: #FF44FF;"></div>
-                    <div class="color-swatch" data-color="#44FFFF" style="background: #44FFFF;"></div>
-                    <div class="color-swatch" data-color="#FFFFFF" style="background: #FFFFFF;"></div>
-                </div>
-                <div class="brush-controls">
-                    <div class="brush-size-btn small active" data-size="3">
-                        <span></span>
+                <!-- Pictochat Drawing Tools Panel -->
+                <div class="drawing-tools-panel">
+                    <!-- Color Palette -->
+                    <div class="color-palette-section">
+                        <div class="palette-label">COLOR</div>
+                        <div class="color-grid">
+                            <button class="color-swatch active" data-color="#000000" 
+                                    style="background-color: #000000;" 
+                                    aria-label="Black"></button>
+                            <button class="color-swatch" data-color="#FF0000" 
+                                    style="background-color: #FF0000;" 
+                                    aria-label="Red"></button>
+                            <button class="color-swatch" data-color="#0066CC" 
+                                    style="background-color: #0066CC;" 
+                                    aria-label="Blue"></button>
+                            <button class="color-swatch" data-color="#00CC00" 
+                                    style="background-color: #00CC00;" 
+                                    aria-label="Green"></button>
+                            <button class="color-swatch" data-color="#FFCC00" 
+                                    style="background-color: #FFCC00;" 
+                                    aria-label="Yellow"></button>
+                            <button class="color-swatch" data-color="#FF6600" 
+                                    style="background-color: #FF6600;" 
+                                    aria-label="Orange"></button>
+                            <button class="color-swatch" data-color="#FF66CC" 
+                                    style="background-color: #FF66CC;" 
+                                    aria-label="Pink"></button>
+                            <button class="color-swatch" data-color="#6600CC" 
+                                    style="background-color: #6600CC;" 
+                                    aria-label="Purple"></button>
+                        </div>
                     </div>
-                    <div class="brush-size-btn medium" data-size="6">
-                        <span></span>
+                    
+                    <!-- Brush Size -->
+                    <div class="brush-size-selector">
+                        <div class="palette-label">SIZE</div>
+                        <div class="size-buttons">
+                            <button class="size-btn active" data-size="small" aria-label="Small brush">
+                                <span class="size-dot small"></span>
+                            </button>
+                            <button class="size-btn" data-size="medium" aria-label="Medium brush">
+                                <span class="size-dot medium"></span>
+                            </button>
+                            <button class="size-btn" data-size="large" aria-label="Large brush">
+                                <span class="size-dot large"></span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="brush-size-btn large" data-size="12">
-                        <span></span>
+                    
+                    <!-- Tools -->
+                    <div class="tool-actions">
+                        <button class="tool-btn" data-tool="pen" id="penBtn" aria-label="Pen">
+                            PEN
+                        </button>
+                        <button class="tool-btn" data-tool="eraser" id="eraserBtn" aria-label="Eraser">
+                            ERASE
+                        </button>
+                        <button class="tool-btn" data-tool="clear" id="clearBtn" aria-label="Clear canvas">
+                            CLEAR
+                        </button>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="tool-actions">
+                        <button class="tool-btn" id="sendBtn" onclick="sendDoodleMessage()">
+                            SEND
+                        </button>
+                        <button class="tool-btn" id="saveBtn" onclick="saveDoodleAsImage()">
+                            SAVE
+                        </button>
                     </div>
                 </div>
-                <div class="drawing-tools">
-                    <button class="tool-btn" id="clearBtn">CLEAR</button>
-                    <button class="tool-btn" id="eraserBtn">ERASER</button>
-                    <button class="tool-btn" id="saveBtn" onclick="saveDoodleAsImage()">SAVE</button>
-                    <button class="tool-btn" id="shareBtn" onclick="shareDoodle()">SHARE</button>
-                </div>
+                
+                <!-- Message Display Area for Pictochat -->
+                <div id="messageDisplayArea" class="message-display-area"></div>
             </div>
         </div>
     </section>
@@ -1313,7 +1785,7 @@
                     GET EARLY ACCESS
                 </a>
                 <p style="margin-top: 40px; font-size: 10px; color: var(--argo-blue);">
-                    Limited spots • Launching Q2 2025
+                    Limited spots â€¢ Launching Q2 2025
                 </p>
             </div>
         </div>
@@ -1321,7 +1793,7 @@
 
     <!-- Achievement Badge (Hidden by default) -->
     <div class="achievement-badge" id="achievementBadge" style="display: none;">
-        <div class="achievement-icon">★</div>
+        <div class="achievement-icon">â˜…</div>
         <div class="achievement-title">Achievement Unlocked!</div>
         <div class="achievement-desc" id="achievementDesc">Master Artist</div>
     </div>
@@ -3951,6 +4423,645 @@
 
         // Initialize everything
         window.addEventListener('DOMContentLoaded', () => {
+            // ============================================
+            // PICTOCHAT DRAWING TOOLS CONTROLLER
+            // Phase 5 Enhancement - Complete Implementation
+            // ============================================
+            
+            class PictochatDrawingController {
+                constructor(canvasId) {
+                    this.canvas = document.getElementById(canvasId);
+                    if (!this.canvas) return;
+                    
+                    this.ctx = this.canvas.getContext('2d');
+                    this.isDrawing = false;
+                    this.currentColor = '#000000';
+                    this.currentSize = 'small';
+                    this.currentTool = 'pen';
+                    this.lastX = 0;
+                    this.lastY = 0;
+                    
+                    // Brush size mapping for Pictochat style
+                    this.brushSizes = {
+                        small: 3,
+                        medium: 6,
+                        large: 10
+                    };
+                    
+                    this.setupCanvas();
+                    this.initializeEventListeners();
+                }
+                
+                setupCanvas() {
+                    // Set canvas dimensions properly
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.canvas.width = rect.width;
+                    this.canvas.height = rect.height;
+                    
+                    // Clear with white background
+                    this.ctx.fillStyle = '#FFFFFF';
+                    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    
+                    // Set pixel-perfect rendering
+                    this.ctx.imageSmoothingEnabled = false;
+                    this.ctx.lineCap = 'square';
+                    this.ctx.lineJoin = 'miter';
+                }
+                
+                initializeEventListeners() {
+                    // Color selection
+                    document.querySelectorAll('.color-swatch').forEach(swatch => {
+                        swatch.addEventListener('click', (e) => {
+                            this.selectColor(e.currentTarget);
+                        });
+                    });
+                    
+                    // Brush size selection
+                    document.querySelectorAll('.size-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            this.selectBrushSize(e.currentTarget);
+                        });
+                    });
+                    
+                    // Tool buttons
+                    document.querySelectorAll('[data-tool]').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            const tool = e.currentTarget.dataset.tool;
+                            this.selectTool(tool);
+                        });
+                    });
+                    
+                    // Canvas drawing events
+                    this.canvas.addEventListener('mousedown', this.startDrawing.bind(this));
+                    this.canvas.addEventListener('mousemove', this.draw.bind(this));
+                    this.canvas.addEventListener('mouseup', this.stopDrawing.bind(this));
+                    this.canvas.addEventListener('mouseleave', this.stopDrawing.bind(this));
+                    
+                    // Touch support for mobile
+                    this.canvas.addEventListener('touchstart', this.handleTouchStart.bind(this));
+                    this.canvas.addEventListener('touchmove', this.handleTouchMove.bind(this));
+                    this.canvas.addEventListener('touchend', this.stopDrawing.bind(this));
+                }
+                
+                selectColor(element) {
+                    this.currentColor = element.dataset.color;
+                    this.currentTool = 'pen'; // Auto-switch back to pen
+                    
+                    // Update UI
+                    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+                    element.classList.add('active');
+                    
+                    // Reset tool buttons
+                    document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active-tool'));
+                    document.getElementById('penBtn')?.classList.add('active-tool');
+                }
+                
+                selectBrushSize(element) {
+                    this.currentSize = element.dataset.size;
+                    
+                    // Update UI
+                    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                    element.classList.add('active');
+                }
+                
+                selectTool(tool) {
+                    this.currentTool = tool;
+                    
+                    if (tool === 'clear') {
+                        this.clearCanvas();
+                    } else if (tool === 'pen' || tool === 'eraser') {
+                        // Update active tool indicator
+                        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active-tool'));
+                        document.querySelector(`[data-tool="${tool}"]`)?.classList.add('active-tool');
+                    }
+                }
+                
+                clearCanvas() {
+                    if (confirm('Clear your doodle? This cannot be undone!')) {
+                        this.ctx.fillStyle = '#FFFFFF';
+                        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                    }
+                }
+                
+                startDrawing(e) {
+                    this.isDrawing = true;
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.lastX = e.clientX - rect.left;
+                    this.lastY = e.clientY - rect.top;
+                    
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.lastX, this.lastY);
+                }
+                
+                draw(e) {
+                    if (!this.isDrawing) return;
+                    
+                    const rect = this.canvas.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    // Pixelate coordinates for authentic DS feel
+                    const pixelX = Math.floor(x / 2) * 2;
+                    const pixelY = Math.floor(y / 2) * 2;
+                    
+                    this.ctx.lineWidth = this.brushSizes[this.currentSize];
+                    
+                    if (this.currentTool === 'eraser') {
+                        this.ctx.globalCompositeOperation = 'destination-out';
+                    } else {
+                        this.ctx.globalCompositeOperation = 'source-over';
+                        this.ctx.strokeStyle = this.currentColor;
+                    }
+                    
+                    this.ctx.lineTo(pixelX, pixelY);
+                    this.ctx.stroke();
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(pixelX, pixelY);
+                    
+                    this.lastX = pixelX;
+                    this.lastY = pixelY;
+                }
+                
+                stopDrawing() {
+                    this.isDrawing = false;
+                    this.ctx.beginPath();
+                }
+                
+                handleTouchStart(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousedown', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    this.canvas.dispatchEvent(mouseEvent);
+                }
+                
+                handleTouchMove(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousemove', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    this.canvas.dispatchEvent(mouseEvent);
+                }
+                
+                isCanvasEmpty() {
+                    const pixelData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height).data;
+                    for (let i = 0; i < pixelData.length; i += 4) {
+                        // Check if any pixel is not white
+                        if (pixelData[i] !== 255 || pixelData[i+1] !== 255 || pixelData[i+2] !== 255) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+                
+                getCanvasData() {
+                    return this.canvas.toDataURL('image/png');
+                }
+            }
+            
+            // ============================================
+            // MESSAGE SEND ANIMATION SYSTEM
+            // Authentic Pictochat flying message animation
+            // ============================================
+            
+            class MessageSendAnimation {
+                constructor() {
+                    this.canvas = document.getElementById('enhancedCanvas');
+                    this.messageArea = document.getElementById('messageDisplayArea');
+                    this.isAnimating = false;
+                }
+                
+                async sendMessage() {
+                    if (this.isAnimating) {
+                        console.warn('Animation already in progress');
+                        return;
+                    }
+                    
+                    // Check if canvas has content
+                    if (window.pictochatDrawing && window.pictochatDrawing.isCanvasEmpty()) {
+                        alert('Draw something first!');
+                        return;
+                    }
+                    
+                    this.isAnimating = true;
+                    
+                    try {
+                        // Get canvas image data
+                        const imageData = window.pictochatDrawing.getCanvasData();
+                        
+                        // Create flying element
+                        const flyingElement = this.createFlyingElement(imageData);
+                        document.body.appendChild(flyingElement);
+                        
+                        // Perform animation
+                        await this.animateFlight(flyingElement);
+                        
+                        // Add to message area
+                        this.addToMessageArea(imageData);
+                        
+                        // Cleanup
+                        flyingElement.remove();
+                        
+                        // Clear canvas for next doodle
+                        if (window.pictochatDrawing) {
+                            const ctx = window.pictochatDrawing.ctx;
+                            ctx.fillStyle = '#FFFFFF';
+                            ctx.fillRect(0, 0, window.pictochatDrawing.canvas.width, window.pictochatDrawing.canvas.height);
+                        }
+                        
+                    } catch (error) {
+                        console.error('Send animation failed:', error);
+                    } finally {
+                        this.isAnimating = false;
+                    }
+                }
+                
+                createFlyingElement(imageData) {
+                    const element = document.createElement('div');
+                    element.className = 'flying-message';
+                    element.style.cssText = `
+                        position: fixed;
+                        z-index: 9999;
+                        pointer-events: none;
+                        image-rendering: pixelated;
+                        width: 200px;
+                    `;
+                    
+                    const img = document.createElement('img');
+                    img.src = imageData;
+                    img.style.cssText = `
+                        display: block;
+                        width: 100%;
+                        height: auto;
+                        image-rendering: pixelated;
+                    `;
+                    
+                    element.appendChild(img);
+                    
+                    // Position at canvas location
+                    const canvasRect = this.canvas.getBoundingClientRect();
+                    element.style.left = canvasRect.left + canvasRect.width / 2 - 100 + 'px';
+                    element.style.top = canvasRect.top + 'px';
+                    
+                    return element;
+                }
+                
+                async animateFlight(element) {
+                    const startRect = element.getBoundingClientRect();
+                    const messageArea = this.messageArea || document.querySelector('.message-display-area');
+                    
+                    if (!messageArea) {
+                        console.error('Message area not found');
+                        return;
+                    }
+                    
+                    const endRect = messageArea.getBoundingClientRect();
+                    
+                    // Calculate target position
+                    const targetX = endRect.left + (endRect.width / 2) - 100;
+                    const targetY = endRect.top + 20;
+                    
+                    // Create animation keyframes for authentic DS feel
+                    const keyframes = [
+                        {
+                            // Start
+                            left: startRect.left + 'px',
+                            top: startRect.top + 'px',
+                            transform: 'scale(1) rotate(0deg)',
+                            opacity: 1,
+                            filter: 'brightness(1)'
+                        },
+                        {
+                            // Lift off
+                            offset: 0.15,
+                            left: startRect.left + 'px',
+                            top: (startRect.top - 30) + 'px',
+                            transform: 'scale(0.95) rotate(-10deg)',
+                            opacity: 1
+                        },
+                        {
+                            // Mid-flight
+                            offset: 0.5,
+                            left: ((startRect.left + targetX) / 2) + 'px',
+                            top: (Math.min(startRect.top, targetY) - 100) + 'px',
+                            transform: 'scale(0.6) rotate(180deg)',
+                            opacity: 0.9
+                        },
+                        {
+                            // Approaching
+                            offset: 0.85,
+                            left: targetX + 'px',
+                            top: (targetY - 20) + 'px',
+                            transform: 'scale(0.7) rotate(340deg)',
+                            opacity: 1
+                        },
+                        {
+                            // Arrival
+                            left: targetX + 'px',
+                            top: targetY + 'px',
+                            transform: 'scale(0.8) rotate(360deg)',
+                            opacity: 1,
+                            filter: 'brightness(1.3)'
+                        }
+                    ];
+                    
+                    // Animation options
+                    const options = {
+                        duration: 800,
+                        easing: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+                        fill: 'forwards'
+                    };
+                    
+                    // Start animation
+                    const animation = element.animate(keyframes, options);
+                    
+                    // Add trailing particles
+                    this.addTrailEffect(startRect, { left: targetX, top: targetY });
+                    
+                    // Wait for animation to complete
+                    await animation.finished;
+                    
+                    // Bounce effect on arrival
+                    await element.animate([
+                        { transform: 'scale(0.8) rotate(360deg)' },
+                        { transform: 'scale(0.9) rotate(360deg)' },
+                        { transform: 'scale(0.8) rotate(360deg)' }
+                    ], {
+                        duration: 200,
+                        easing: 'ease-in-out'
+                    }).finished;
+                }
+                
+                addTrailEffect(startPos, endPos) {
+                    const particleCount = 5;
+                    for (let i = 0; i < particleCount; i++) {
+                        setTimeout(() => {
+                            const particle = document.createElement('div');
+                            particle.className = 'trail-particle';
+                            particle.style.left = startPos.left + startPos.width / 2 + 'px';
+                            particle.style.top = startPos.top + startPos.height / 2 + 'px';
+                            document.body.appendChild(particle);
+                            
+                            // Animate particle
+                            particle.animate([
+                                {
+                                    left: particle.style.left,
+                                    top: particle.style.top,
+                                    opacity: 1,
+                                    transform: 'scale(1)'
+                                },
+                                {
+                                    left: endPos.left + Math.random() * 50 - 25 + 'px',
+                                    top: endPos.top + Math.random() * 50 - 25 + 'px',
+                                    opacity: 0,
+                                    transform: 'scale(0.5)'
+                                }
+                            ], {
+                                duration: 600,
+                                easing: 'ease-out'
+                            });
+                            
+                            // Remove particle after animation
+                            setTimeout(() => particle.remove(), 600);
+                        }, i * 100);
+                    }
+                }
+                
+                addToMessageArea(imageData) {
+                    if (!this.messageArea) {
+                        this.messageArea = document.getElementById('messageDisplayArea');
+                        if (!this.messageArea) {
+                            // Create message area if it doesn't exist
+                            this.messageArea = document.createElement('div');
+                            this.messageArea.id = 'messageDisplayArea';
+                            this.messageArea.className = 'message-display-area';
+                            const canvasContainer = document.querySelector('.canvas-container');
+                            if (canvasContainer) {
+                                canvasContainer.appendChild(this.messageArea);
+                            }
+                        }
+                    }
+                    
+                    // Create message bubble
+                    const messageBubble = document.createElement('div');
+                    messageBubble.className = 'message-bubble new-message';
+                    messageBubble.innerHTML = `
+                        <div class="message-header">
+                            <span class="sender">YOU</span>
+                            <span class="timestamp">${this.getCurrentTime()}</span>
+                        </div>
+                        <div class="message-content doodle-message">
+                            <img src="${imageData}" alt="Your doodle" class="doodle-image">
+                        </div>
+                    `;
+                    
+                    // Add to message area
+                    this.messageArea.appendChild(messageBubble);
+                    
+                    // Entrance animation
+                    setTimeout(() => {
+                        messageBubble.classList.add('visible');
+                    }, 10);
+                    
+                    // Scroll to new message
+                    this.messageArea.scrollTop = this.messageArea.scrollHeight;
+                }
+                
+                getCurrentTime() {
+                    const now = new Date();
+                    return now.toLocaleTimeString('en-US', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                }
+            }
+            
+            // ============================================
+            // DS BOOT SEQUENCE CONTROLLER
+            // Nintendo DS-style startup animation
+            // ============================================
+            
+            class DSBootSequence {
+                constructor() {
+                    this.hasSeenBoot = localStorage.getItem('argoBootSeen') === 'true';
+                    this.isSkipped = false;
+                }
+                
+                async start() {
+                    // Skip if user has seen it before
+                    if (this.hasSeenBoot) {
+                        console.log('Boot sequence already seen, skipping');
+                        return;
+                    }
+                    
+                    // Create boot screen
+                    const bootScreen = this.createBootScreen();
+                    document.body.appendChild(bootScreen);
+                    
+                    // Add event listeners
+                    this.addEventListeners(bootScreen);
+                    
+                    // Run sequence
+                    await this.runSequence(bootScreen);
+                    
+                    // Mark as seen
+                    localStorage.setItem('argoBootSeen', 'true');
+                }
+                
+                createBootScreen() {
+                    const bootScreen = document.createElement('div');
+                    bootScreen.id = 'dsBootScreen';
+                    bootScreen.className = 'ds-boot-screen';
+                    bootScreen.innerHTML = `
+                        <!-- Stage 1 & 2: Warning -->
+                        <div class="boot-stage" data-stage="warning">
+                            <div class="warning-text">
+                                <p class="warning-title">HEALTH AND SAFETY</p>
+                                <p class="warning-body">
+                                    BEFORE USING THIS WEBSITE, READ THE<br>
+                                    OPERATIONS MANUAL FOR IMPORTANT<br>
+                                    INFORMATION ABOUT YOUR HEALTH AND SAFETY.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Stage 3: Logo -->
+                        <div class="boot-stage" data-stage="logo" style="display: none;">
+                            <div class="boot-logo">
+                                <p class="logo-text">ARGO SYSTEM</p>
+                                <p class="logo-subtitle">PICTOCHAT EDITION</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Stage 4: Loading -->
+                        <div class="boot-stage" data-stage="loading" style="display: none;">
+                            <div class="boot-loading">
+                                <div class="loading-bar-container">
+                                    <div class="loading-bar"></div>
+                                </div>
+                                <p class="loading-text">LOADING ARGO...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Skip button -->
+                        <button class="boot-skip-btn">
+                            PRESS SPACE TO SKIP
+                        </button>
+                    `;
+                    return bootScreen;
+                }
+                
+                addEventListeners(bootScreen) {
+                    const skipBtn = bootScreen.querySelector('.boot-skip-btn');
+                    
+                    // Skip button click
+                    skipBtn.addEventListener('click', () => this.skip(bootScreen));
+                    
+                    // Space key to skip
+                    const keyHandler = (e) => {
+                        if (e.code === 'Space' && !this.isSkipped) {
+                            this.skip(bootScreen);
+                            document.removeEventListener('keydown', keyHandler);
+                        }
+                    };
+                    document.addEventListener('keydown', keyHandler);
+                    
+                    // Click anywhere to skip
+                    bootScreen.addEventListener('click', (e) => {
+                        if (e.target === bootScreen) {
+                            this.skip(bootScreen);
+                        }
+                    });
+                }
+                
+                async runSequence(bootScreen) {
+                    // Stage 1: Warning (1.5 seconds)
+                    await this.showStage(bootScreen, 'warning', 1500);
+                    if (this.isSkipped) return;
+                    
+                    // Stage 2: Logo (1.2 seconds)
+                    await this.showStage(bootScreen, 'logo', 1200);
+                    if (this.isSkipped) return;
+                    
+                    // Stage 3: Loading (1.5 seconds)
+                    await this.showStage(bootScreen, 'loading', 1500);
+                    if (this.isSkipped) return;
+                    
+                    // Complete sequence
+                    await this.complete(bootScreen);
+                }
+                
+                async showStage(bootScreen, stageName, duration) {
+                    return new Promise((resolve) => {
+                        // Hide all stages
+                        bootScreen.querySelectorAll('.boot-stage').forEach(stage => {
+                            stage.style.display = 'none';
+                        });
+                        
+                        // Show current stage
+                        const stageElement = bootScreen.querySelector(`[data-stage="${stageName}"]`);
+                        if (stageElement) {
+                            stageElement.style.display = 'block';
+                        }
+                        
+                        // Wait for duration
+                        setTimeout(resolve, duration);
+                    });
+                }
+                
+                skip(bootScreen) {
+                    this.isSkipped = true;
+                    this.complete(bootScreen);
+                }
+                
+                async complete(bootScreen) {
+                    // Fade out boot screen
+                    bootScreen.classList.add('fade-out');
+                    
+                    // Wait for fade animation
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                    
+                    // Remove from DOM
+                    bootScreen.remove();
+                    
+                    // Show main content
+                    document.body.classList.add('boot-complete');
+                }
+                
+                // Reset boot sequence (for testing)
+                static reset() {
+                    localStorage.removeItem('argoBootSeen');
+                    console.log('Boot sequence reset. Reload page to see it again.');
+                }
+            }
+            
+            // ============================================
+            // INITIALIZE ALL PHASE 5 FEATURES
+            // ============================================
+            
+            // Initialize Pictochat drawing controller
+            window.pictochatDrawing = new PictochatDrawingController('enhancedCanvas');
+            
+            // Initialize message sender
+            window.messageSender = new MessageSendAnimation();
+            
+            // Initialize DS boot sequence
+            const bootSequence = new DSBootSequence();
+            bootSequence.start();
+            
+            // Expose functions for buttons
+            window.sendDoodleMessage = () => {
+                if (window.messageSender) {
+                    window.messageSender.sendMessage();
+                }
+            };
+            
+            // Expose boot reset for testing
+            window.resetBootSequence = () => DSBootSequence.reset();
             // Initialize WebGL effects
             const webglCanvas = document.getElementById('webglCanvas');
             if (webglCanvas) {
