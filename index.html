@@ -570,7 +570,7 @@
         }
         
         .color-swatch.active::after {
-            content: '✓';
+            content: 'âœ“';
             position: absolute;
             top: 50%;
             left: 50%;
@@ -1726,10 +1726,6 @@
     <div class="stats-dashboard">
         <div class="stats-title">LIVE STATS</div>
         <div class="stat-row">
-            <span class="stat-label">Visitors:</span>
-            <span class="stat-value" id="visitorCount">12,847</span>
-        </div>
-        <div class="stat-row">
             <span class="stat-label">Doodles:</span>
             <span class="stat-value" id="doodleCount">3,421</span>
         </div>
@@ -1933,7 +1929,7 @@
 
     <!-- Achievement Badge (Hidden by default) -->
     <div class="achievement-badge" id="achievementBadge" style="display: none;">
-        <div class="achievement-icon">â˜…</div>
+        <div class="achievement-icon">Ã¢Ëœâ€¦</div>
         <div class="achievement-title">Achievement Unlocked!</div>
         <div class="achievement-desc" id="achievementDesc">Master Artist</div>
     </div>
@@ -3463,14 +3459,7 @@
             }
 
             simulateLiveUpdate() {
-                // Occasionally update visitor count to simulate activity
-                if (Math.random() > 0.7) {
-                    const visitorCount = document.getElementById('visitorCount');
-                    if (visitorCount) {
-                        const current = parseInt(visitorCount.textContent.replace(',', ''));
-                        visitorCount.textContent = (current + Math.floor(Math.random() * 5)).toLocaleString();
-                    }
-                }
+                // Live update simulation - visitor count removed
             }
         }
         
@@ -4497,19 +4486,12 @@
         class StatsTracker {
             constructor() {
                 this.startTime = Date.now();
-                this.visitorCount = 12847;
                 this.init();
             }
 
             init() {
                 this.updateStats();
                 setInterval(() => this.updateStats(), 1000);
-                
-                // Simulate visitor count increases
-                setInterval(() => {
-                    this.visitorCount += Math.floor(Math.random() * 3);
-                    document.getElementById('visitorCount').textContent = this.visitorCount.toLocaleString();
-                }, 5000);
             }
 
             updateStats() {
